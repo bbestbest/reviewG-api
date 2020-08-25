@@ -31,6 +31,7 @@ CREATE TABLE `Reviews` (
     `body` VARCHAR(255) ,
     `writer` VARCHAR(30) ,
     `score` INT(1) ,
+    `date` TIMESTAMP ,
     `review_comment` VARCHAR(255) ,
 
     PRIMARY KEY(`id`)
@@ -39,6 +40,7 @@ CREATE TABLE `Reviews` (
 CREATE TABLE `Comments`(
     `id` INT(5) AUTO_INCREMENT,
     `comment` VARCHAR(255) ,
+    `comment_date` TIMESTAMP ,
 
     PRIMARY KEY(`id`)
     CONSTRAINT `comment_ibfk_1` FOREIGN KEY (`comment`) REFERENCES `Reviews`.`review_comment`,
