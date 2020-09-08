@@ -9,51 +9,55 @@ DROP TABLE IF EXISTS `Admin_Accounts`;
 DROP TABLE IF EXISTS `Accounts`;
 
 CREATE TABLE `Accounts`(
-    `id` INT(5) AUTO_INCREMENT ,
-    `user_username` VARCHAR(30) NOT NULL ,
-    `user_password` VARCHAR(30) NOT NULL ,
-    `user_email` VARCHAR(30) NOT NULL UNIQUE,
+    `account_id` INT(5) AUTO_INCREMENT ,
+    `username` VARCHAR(30) NOT NULL ,
+    `password` VARCHAR(30) NOT NULL ,
+    `email` VARCHAR(30) NOT NULL UNIQUE,
 
-    PRIMARY KEY(`id`)
+    PRIMARY KEY(`account_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET utf8mb4;
 
-CREATE TABLE `Admin_Accounts`(
-    `id` INT(5) AUTO_INCREMENT ,
-    `admin_username` VARCHAR(30) NOT NULL ,
-    `admin_password` VARCHAR(30) NOT NULL ,
-    `admin_email` VARCHAR(30) NOT NULL ,
+CREATE TABLE `Admins`(
+    `admin_id` INT(5) AUTO_INCREMENT ,
+    `username` VARCHAR(30) NOT NULL ,
+    `password` VARCHAR(30) NOT NULL ,
+    `email` VARCHAR(30) NOT NULL ,
 
-    PRIMARY KEY(`id`)
+    PRIMARY KEY(`admin_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET utf8mb4;
 
 CREATE TABLE `Comments`(
-    `id` INT(5) AUTO_INCREMENT,
+    `comment_id` INT(5) AUTO_INCREMENT,
     `comment` VARCHAR(255) ,
-     `comment_date` TIMESTAMP ,
+    `comment_date` TIMESTAMP NOT NULL,
 
-    PRIMARY KEY(`id`)
-    CONSTRAINT `reviews_ibfk_1` FOREIGN KEY (`comment`) REFERENCES `Reviews`.`review_comment`,
+    PRIMARY KEY(`comment_id`)
+    CONSTRAINT `account_ibfk_1` FOREIGN KEY (`account_id`) REFERENCES `Accounts`.`account_id`,
 ) ENGINE=InnoDB DEFAULT CHARSET utf8mb4;
 
 
 CREATE TABLE `User_Scores`(
-    `id` INT(5) AUTO_INCREMENT ,
-    `user_overrall_score` INT (1) ,
+    `user_score_id` INT(5) AUTO_INCREMENT ,
+    `score` INT (1) ,
 
-    PRIMARY KEY(`id`)
-    CONSTRAINT `reviews_ibfk_1` FOREIGN KEY (`user_overrall_score`) REFERENCES `Reviews`.`user_score`,
+    PRIMARY KEY(`user_score_id`)
+    CONSTRAINT `account_ibfk_1` FOREIGN KEY (`account_id`) REFERENCES `Accounts`.`account_id`,
 ) ENGINE=InnoDB DEFAULT CHARSET utf8mb4;
 
 CREATE TABLE `Admin_Scores`(
-    `id` INT(5) AUTO_INCREMENT ,
-    `user_overrall_score` INT (1) ,
+    `admin_score_id` INT(5) AUTO_INCREMENT ,
+    `story` INT (1) ,
+    `gameplay` INT (1) ,
+    `performance` INT (1) ,
+    `graphic` INT (1) ,
+    `overrall` INT (1) ,
 
-    PRIMARY KEY(`id`)
-    CONSTRAINT `user_scores_ibfk_1` FOREIGN KEY (`user_overrall_score`) REFERENCES `Reviews`.`user_score`,
+    PRIMARY KEY(`admin_score_id`)
+    CONSTRAINT `admin_ibfk_1` FOREIGN KEY (`admin_id`) REFERENCES `Admins`(`admin_id`),
 ) ENGINE=InnoDB DEFAULT CHARSET utf8mb4;
 
 CREATE TABLE `Reviews` (
-    `id` INT(5) AUTO_INCREMENT ,
+    `review_id` INT(5) AUTO_INCREMENT ,
     `topic` VARCHAR(50) ,
     `body` VARCHAR(255) ,
     `writer` VARCHAR(30) ,
@@ -61,10 +65,10 @@ CREATE TABLE `Reviews` (
     `user_score` INT(1) ,
     `review_comment` VARCHAR(255) ,
 
-    PRIMARY KEY(`id`)
-    CONSTRAINT `user_scores_ibfk_1` FOREIGN KEY (`user_score`) REFERENCES `User_Scores`.`user_overrall_score`,
-    CONSTRAINT `admin_scores_ibfk_2` FOREIGN KEY (`admin_score`) REFERENCES `Admin_Scores`.`admin_overrall_score`,
-    CONSTRAINT `comments_ibfk_3` FOREIGN KEY (`review_comment`) REFERENCES `Comments`.`comment`,
+    PRIMARY KEY(`review_id`)
+    CONSTRAINT `admin_score_ibfk_1` FOREIGN KEY (`admin_score_id`) REFERENCES `Admin_Scores`.`admin_score_id`,
+    CONSTRAINT `admin_ibfk_2` FOREIGN KEY (`admin_id`) REFERENCES `Admins`.`admin_id`,
+    CONSTRAINT `comment_ibfk_3` FOREIGN KEY (`comment_id`) REFERENCES `Comments`.`comment_id`,
+    CONSTRAINT `user_score_ibfk_1` FOREIGN KEY (`user_score_id`) REFERENCES `User_Scores`.`user_score_id`,
 ) ENGINE=InnoDB DEFAULT CHARSET utf8mb4;
 
--- UNIQUE
