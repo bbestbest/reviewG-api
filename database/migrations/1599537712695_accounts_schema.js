@@ -6,8 +6,12 @@ const Schema = use('Schema')
 class AccountsSchema extends Schema {
   up () {
     this.create('accounts', (table) => {
-      table.increments()
+      table.increments('account_id')
+      table.string("username",30).notNullable().unique()
+      table.string("password",30).notNullable().unique()
+      table.string("email",60).notNullable().unique()
       table.timestamps()
+
     })
   }
 
