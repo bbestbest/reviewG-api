@@ -1,6 +1,8 @@
 'use strict'
 
 const Database = use('Database')
+const Hash = use ('Hash')
+const AdminValidator = require('../../../service/Admin_ScoreValidator')
 
 function numberTypeParamValidator(number){
     if (Number.isNaN(parseInt(number))) 
@@ -35,22 +37,21 @@ class AdminController {
     }
 
     async store({request}) {
-        const { username,password,email } = request.body
+        const { username, email, password } = request.body
 
+        const validatedData = await AdminValidator(request.body)
 
-        const missingKeys = []
+    
+        if (validatedData.error)
+          return { status: 422, error: validatedData.error, data: undefined }
 
-        if(!username ) missingKeys.push('username')
-        if(!password ) missingKeys.push('password')
-        if(!email ) missingKeys.push('email')
-        if (missingKeys.length)
-            return { status: 422, error: `${missingKeys} is missing.`,data: undefined}
-
+        const hashedPassword = await Hash.make(password)
 
         const admin = await Database
-            .table('admins')
-            .insert({ username,password,email })
-        return { status: 200,error: undefined, data: { username,password,email }}
+          .table('admins')
+          .insert({ username, email, password: hashedPassword })
+    
+        return { status: 200, error: undefined, data: { username, email } }
     }
 
     async update({request}){

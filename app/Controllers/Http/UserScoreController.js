@@ -1,5 +1,7 @@
 'use strict'
 
+const UserScoreValidator = require('../../../service/User_ScoreValidator')
+
 const Database = use('Database')
 
 function numberTypeParamValidator(number){
@@ -37,22 +39,18 @@ class UserScoreController {
     async store({request}) {
         const { story,gameplay,performance,graphic,overall } = request.body
 
+        const validatedData = await UserScoreValidator(request.body)
+        
 
-        const missingKeys = []
+        if (validatedData.error)
+          return { status: 422, error: validatedData.error, data: undefined }
 
-        if(!story ) missingKeys.push('story')
-        if(!gameplay ) missingKeys.push('gameplay')
-        if(!performance ) missingKeys.push('performance')
-        if(!graphic ) missingKeys.push('graphic')
-        if(!overall ) missingKeys.push('overall')
-        if (missingKeys.length)
-            return { status: 422, error: `${missingKeys} is missing.`,data: undefined}
+        const account = await Database
+          .table('user_scores')
+          .insert({ story,gameplay,performance,graphic,overall })
+    
+        return { status: 200, error: undefined, data: { story,gameplay,performance,graphic,overall } }
 
-
-        const user_score = await Database
-            .table('user_scores')
-            .insert({ story,gameplay,performance,graphic,overall })
-        return { status: 200,error: undefined, data: { story,gameplay,performance,graphic,overall }}
     }
 
     async update({request}){
