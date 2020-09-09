@@ -34,5 +34,5 @@ Route.group(() => {
 
   Route.resource('/posts', 'PostController')
 
-}) .prefix('api/reviewG')
+}) .prefix('api/v1')
 
