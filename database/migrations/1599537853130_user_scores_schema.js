@@ -7,11 +7,11 @@ class UserScoresSchema extends Schema {
   up () {
     this.create('user_scores', (table) => {
       table.increments('user_score_id')
-      table.integer("story",1)
-      table.integer("gameplay",1)
-      table.integer("performance",1)
-      table.integer("graphic",1)
-      table.integer("overall",1)
+      table.integer("story",2)
+      table.integer("gameplay",2)
+      table.integer("performance",2)
+      table.integer("graphic",2)
+      table.integer("overall",2)
       table.timestamps()
       table.integer("account_id").unsigned()
 
