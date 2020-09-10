@@ -13,7 +13,7 @@ class AdminScoresSchema extends Schema {
       table.integer("graphic",2).notNullable()
       table.integer("overall",2)
       table.timestamps()
-      table.integer("admin_id").unsigned()
+      table.integer("admin_id").unsigned().notNullable()
 
       table
       .foreign('admin_id')
