@@ -26,13 +26,13 @@ class AdminController {
     async show ({request}) {
         const { id } = request.params
 
-        const validateValue = AdminValidator(id)
+        const validateValue = numberTypeParamValidator(id)
 
         if (validateValue.error) {
             return {status: 500, error: validateValue.error, data: undefined }
         }
 
-        const admin = Admin
+        const admin = await Admin
             .query()
             .where("admin_id",id)
             .first()
@@ -43,13 +43,7 @@ class AdminController {
     async store({request}) {
         const { username, email, password } = request.body
 
-        const rules = {
-            username : 'required',
-            password : 'required',
-            email : 'required'
-        }
-
-        const validatedValue = await Validator.validateAll(request.body,rules)
+        const validatedValue = AdminValidator(request.body)
 
         if(validatedValue.error) {
             return { status: 500, error: validateValue.error , data: undefined}
@@ -63,11 +57,11 @@ class AdminController {
 
     async update({request}){
   
-        const{ body,params } = request
+        const { body,params } = request
         const { id } = params
         const { username,password,email } = body
   
-        const adminId = await Admin
+        const adminID = await Admin
             .query()
             .where ({ admin_id: id })
             .update ({ username,password,email })

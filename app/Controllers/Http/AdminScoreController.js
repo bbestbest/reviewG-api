@@ -1,7 +1,9 @@
 'use strict'
 
+const AdminScoreValidator = require('../../../service/ScoreValidator')
+
 const Database = use('Database')
-const ScoreValidator = require('../../../service/ScoreValidator')
+const AdminScore = use('App/Models/AdminScore')
 
 function numberTypeParamValidator(number){
     if (Number.isNaN(parseInt(number))) 
@@ -12,7 +14,9 @@ function numberTypeParamValidator(number){
 
 class AdminScoreController {
     async index () {
-        const admin_score = await Database.table('admin_scores')
+        const adminScore = await AdminScore
+          .query()
+          .fetch()
 
         return { status: 200,error: undefined, data:  admin_score}
     }
@@ -25,26 +29,24 @@ class AdminScoreController {
         if (validateValue.error) 
         return {status: 500, error: validateValue.error, data: undefined }
 
-        const admin = await Database
-            .select('*')
-            .from('admin_scores')
-            .where("admin_score_id",id)
-            .first()
+        const adminScore = await AdminScore
+          .query()
+          .where("admin_score_id",id)
+          .first()
 
-        return { status:200,data: admin || {}}
+        return { status:200,data: adminScore || {}}
     }
 
     async store({request}) {
         const { story,gameplay,performance,graphic,overall } = request.body
 
-        const validatedData = await ScoreValidator(request.body)
+        const validatedData = await AdminScoreValidator(request.body)
         
-
         if (validatedData.error)
           return { status: 422, error: validatedData.error, data: undefined }
 
-        const admin = await Database
-          .table('admin_scores')
+        const adminScore = await AdminScore
+          .query()
           .insert({ story,gameplay,performance,graphic,overall })
     
         return { status: 200, error: undefined, data: { story,gameplay,performance,graphic,overall } }
@@ -57,31 +59,29 @@ class AdminScoreController {
         const { id } = params
         const { story,gameplay,performance,graphic,overall } = body
   
-        const admin_scoreId = await Database
-        .table ('admin_scores')
-        .where ({ admin_score_id: id })
-        .update ({ story,gameplay,performance,graphic,overall })
-  
-        const admin_score = await Database
-        .table ('admin_scores')
-        .where ({ admin_score_id: id })
-        .first()
+        const adminScoreID = await AdminScore
+          .query() 
+          .where ('admin_score_id',id)
+          .update ({ story,gameplay,performance,graphic,overall })
+
+        const adminScore = await AdminScore
+          .query()
+          .where ('admin_score_id',id)
+          .first()
   
       return {status: 200 , error: undefined, data: {admin_score}}
       }
   
-      async destroy ({ request }) {
+  async destroy ({ request }) {
           const { id } =request.params
   
-          await Database
-            .table('admin_scores')
-            .where({ admin_score_id: id })
+          await AdminScore
+            .query()
+            .where('admin_score_id',id)
             .delete()
           
-          return {status: 200 , error: undefined, data: { massage: 'success' }}
+      return {status: 200 , error: undefined, data: { massage: 'success' }}
       }
-   
-    
 }
 
 module.exports = AdminScoreController

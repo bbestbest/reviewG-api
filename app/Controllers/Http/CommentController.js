@@ -1,7 +1,10 @@
 'use strict'
 
-const Database = use('Database')
 const CommentValidator = require('../../../service/CommentValidator')
+
+const Database = use('Database')
+const Comment = use('App/Models/Comment')
+const Validator = use('Validator')
 
 function numberTypeParamValidator(number){
     if (Number.isNaN(parseInt(number))) 
@@ -13,7 +16,9 @@ function numberTypeParamValidator(number){
 class CommentController {
 
     async index () {
-        const comment = await Database.table('comments')
+        const comment = await Comment
+            .query()
+            .fetch()
 
         return { status: 200,error: undefined, data:  comment}
     }
