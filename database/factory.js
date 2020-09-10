@@ -58,7 +58,11 @@ Factory.blueprint('App/Models/Comment', (faker) => {
 Factory.blueprint('App/Models/Post', (faker) => {
     return {
       topic: faker.sentence(),
-      body: faker.paragraph({ sentences: 2 }),
+      bodyv1: faker.paragraph({ sentences: 2 }),
+      bodyv2: faker.paragraph({ sentences: 2 }),
+      bodyv3: faker.paragraph({ sentences: 2 }),
+      bodyv4: faker.paragraph({ sentences: 2 }),
+      bodyv5: faker.paragraph({ sentences: 2 }),
       writer: faker.name()
     }
 })
