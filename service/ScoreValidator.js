@@ -1,4 +1,4 @@
-USerconst Validator = use("Validator")
+ const Validator = use("Validator")
 
 module.exports = async function ScoreValidator ( data ) {
   if (typeof data !== 'object') throw new Error()
