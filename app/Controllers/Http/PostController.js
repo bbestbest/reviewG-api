@@ -40,7 +40,7 @@ class PostController {
     }
 
     async store({request}) {
-        const { topic,body,writer } = request.body
+        const { topic,bodyV1,bodyV2,bodyV3,bodyV4,bodyV5,writer } = request.body
 
         const validatedData = await PostValidator(request.body)
         
@@ -50,9 +50,9 @@ class PostController {
 
         const post = await Post
             .query()
-            .insert({topic,body,writer})
+            .insert({topic,bodyV1,bodyV2,bodyV3,bodyV4,bodyV5,writer})
     
-        return { status: 200, error: undefined, data: { topic,body,writer } }
+        return { status: 200, error: undefined, data: { topic,bodyV1,bodyV2,bodyV3,bodyV4,bodyV5,writer } }
     }
 
     async update({request}) {
