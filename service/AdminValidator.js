@@ -7,7 +7,7 @@ module.exports = async function AdminValidator ( data ) {
 
   const rules = {
     username: 'required',
-    email: 'required|email|unique:accounts,email',
+    email: 'required|email|unique:admins,email',
     password: 'required|min:8'
   }
 
