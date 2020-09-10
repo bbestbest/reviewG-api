@@ -2,8 +2,28 @@
 
 /** @type {typeof import('@adonisjs/lucid/src/Lucid/Model')} */
 const Model = use('Model')
-
 class Post extends Model {
+    static get primaryKey() {
+        return 'post_id'
+    }
+    static get createdAtColumn() {
+        return null
+    }
+    static get updatedAtColumn() {
+        return null
+    }
+    comments() {
+        return this.hasMany('App/Models/Comment')
+    }
+    userScores() {
+        return this.hasMany('App/Models/UserScore')
+    }
+    admins() {
+        return this.belongsTo('App/Models/Admin')
+    }
+    adminScore() {
+        return this.belongsToMany('App/Models/AdminScore')
+    }
 }
 
 module.exports = Post

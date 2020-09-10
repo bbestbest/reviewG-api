@@ -17,6 +17,9 @@ class Admin extends Model {
     adminScores() {
         return this.hasMany('App/Models/AdminScore')
     }
+    posts() {
+        return this.hasMany('App/Models/Post')
+    }
 }
 
 module.exports = Admin
