@@ -7,9 +7,9 @@ class PostsSchema extends Schema {
   up () {
     this.create('posts', (table) => {
       table.increments('post_id')
-      table.string("topic",50)
-      table.string("body",255)
-      table.string("writer",30)
+      table.string("topic")
+      table.string("body")
+      table.string("writer")
       table.timestamp('comment_date').default(this.fn.now())
       table.timestamps()
       table.integer("admin_id").unsigned()
