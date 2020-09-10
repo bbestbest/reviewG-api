@@ -10,11 +10,11 @@ class CommentsSchema extends Schema {
       table.string("comment",255)
       table.timestamp('comment_date').default(this.fn.now())
       table.timestamps()
-      table.integer("account_id").unsigned()
+      table.integer("user_id").unsigned()
 
       table
-      .foreign('account_id')
-      .references('accounts.account_id')
+      .foreign('user_id')
+      .references('users.user_id')
       .onDelete('CASCADE') 
       .onUpdate('CASCADE')
     })

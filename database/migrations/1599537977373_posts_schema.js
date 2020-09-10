@@ -13,33 +13,33 @@ class PostsSchema extends Schema {
       table.timestamp('comment_date').default(this.fn.now())
       table.timestamps()
       table.integer("admin_id").unsigned()
-      table.integer("account_score_id").unsigned()
+      table.integer("user_score_id").unsigned()
       table.integer("admin_score_id").unsigned()
       table.integer("comment_id").unsigned()
 
       table
-      .foreign('admin_id')
-      .references('accounts.account_id')
-      .onDelete('CASCADE') 
-      .onUpdate('CASCADE') 
+        .foreign('admin_id')
+        .references('admins.admin_id')
+        .onDelete('CASCADE') 
+        .onUpdate('CASCADE') 
       
       table
-      .foreign('account_score_id')
-      .references('accounts.account_id')
-      .onDelete('CASCADE') 
-      .onUpdate('CASCADE') 
+        .foreign('user_score_id')
+        .references('user_scores.user_score_id')
+        .onDelete('CASCADE') 
+        .onUpdate('CASCADE') 
       
       table
-      .foreign('admin_score_id')
-      .references('accounts.account_id')
-      .onDelete('CASCADE') 
-      .onUpdate('CASCADE') 
+        .foreign('admin_score_id')
+        .references('admin_scores.admin_score_id')
+        .onDelete('CASCADE') 
+        .onUpdate('CASCADE') 
       
       table
-      .foreign('comment_id')
-      .references('accounts.account_id')
-      .onDelete('CASCADE') 
-      .onUpdate('CASCADE') 
+        .foreign('comment_id')
+        .references('comments.comment_id')
+        .onDelete('CASCADE') 
+        .onUpdate('CASCADE') 
     })
   }
 
