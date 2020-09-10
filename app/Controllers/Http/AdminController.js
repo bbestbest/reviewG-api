@@ -1,6 +1,10 @@
 'use strict'
 
+const AdminValidator = require("../../../service/AdminValidator")
+
 const Database = use('Database')
+const Admin = use('App/Models/Admin')
+const Validator = use('Validator')
 
 function numberTypeParamValidator(number){
     if (Number.isNaN(parseInt(number))) 
@@ -12,7 +16,9 @@ function numberTypeParamValidator(number){
 class AdminController {
 
     async index () {
-        const admin = await Database.table('admins')
+        const admin = await Admin
+            .query()
+            .fetch()
 
         return { status: 200,error: undefined, data:  admin}
     }
@@ -20,14 +26,14 @@ class AdminController {
     async show ({request}) {
         const { id } = request.params
 
-        const validateValue = numberTypeParamValidator(id)
+        const validateValue = AdminValidator(id)
 
-        if (validateValue.error) 
-        return {status: 500, error: validateValue.error, data: undefined }
+        if (validateValue.error) {
+            return {status: 500, error: validateValue.error, data: undefined }
+        }
 
-        const admin = await Database
-            .select('*')
-            .from('admins')
+        const admin = Admin
+            .query()
             .where("admin_id",id)
             .first()
 
@@ -37,18 +43,20 @@ class AdminController {
     async store({request}) {
         const { username,password,email } = request.body
 
+        const rules = {
+            username : 'required',
+            password : 'required',
+            email : 'required'
+        }
 
-        const missingKeys = []
+        const validatedValue = await Validator.validateAll(request.body,rules)
 
-        if(!username ) missingKeys.push('username')
-        if(!password ) missingKeys.push('password')
-        if(!email ) missingKeys.push('email')
-        if (missingKeys.length)
-            return { status: 422, error: `${missingKeys} is missing.`,data: undefined}
+        if(validatedValue.error) {
+            return { status: 500, error: validateValue.error , data: undefined}
+        }
 
-
-        const admin = await Database
-            .table('admins')
+        const admin = await Admin
+            .query()
             .insert({ username,password,email })
         return { status: 200,error: undefined, data: { username,password,email }}
     }
@@ -59,15 +67,15 @@ class AdminController {
         const { id } = params
         const { username,password,email } = body
   
-        const adminId = await Database
-        .table ('admins')
-        .where ({ admin_id: id })
-        .update ({ username,password,email })
+        const adminId = await Admin
+            .query()
+            .where ({ admin_id: id })
+            .update ({ username,password,email })
   
         const admin = await Database
-        .table ('admins')
-        .where ({ admin_id: id })
-        .first()
+            .query()
+            .where ({ admin_id: id })
+            .first()
   
       return {status: 200 , error: undefined, data: {admin}}
       }
@@ -75,8 +83,8 @@ class AdminController {
       async destroy ({ request }) {
           const { id } =request.params
   
-          await Database
-            .table('admins')
+          await Admin
+            .query()
             .where({ admin_id: id })
             .delete()
           
