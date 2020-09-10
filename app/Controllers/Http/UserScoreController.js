@@ -1,6 +1,6 @@
 'use strict'
 
-const UserScoreValidator = require('../../../service/User_ScoreValidator')
+const ScoreValidator = require('../../../service/ScoreValidator')
 
 const Database = use('Database')
 
@@ -39,7 +39,7 @@ class UserScoreController {
     async store({request}) {
         const { story,gameplay,performance,graphic,overall } = request.body
 
-        const validatedData = await UserScoreValidator(request.body)
+        const validatedData = await ScoreValidator(request.body)
         
 
         if (validatedData.error)

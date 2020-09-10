@@ -1,7 +1,7 @@
 'use strict'
 
 const Database = use('Database')
-const AdminScoreValidator = require('../../../service/Admin_ScoreValidator')
+const ScoreValidator = require('../../../service/ScoreValidator')
 
 function numberTypeParamValidator(number){
     if (Number.isNaN(parseInt(number))) 
@@ -37,7 +37,7 @@ class AdminScoreController {
     async store({request}) {
         const { story,gameplay,performance,graphic,overall } = request.body
 
-        const validatedData = await AdminScoreValidator(request.body)
+        const validatedData = await ScoreValidator(request.body)
         
 
         if (validatedData.error)
