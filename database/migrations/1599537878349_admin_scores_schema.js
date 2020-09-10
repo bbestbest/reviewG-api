@@ -11,15 +11,15 @@ class AdminScoresSchema extends Schema {
       table.integer("gameplay",2).notNullable()
       table.integer("performance",2).notNullable()
       table.integer("graphic",2).notNullable()
-      table.integer("overall",2)
+      table.float("overall",2,1)
       table.timestamps()
-      table.integer("admin_id").unsigned().notNullable()
+      table.integer("admin_id").unsigned()
 
       table
-      .foreign('admin_id')
-      .references('admins.admin_id')
-      .onDelete('CASCADE') 
-      .onUpdate('CASCADE')
+        .foreign('admin_id')
+        .references('admins.admin_id')
+        .onDelete('CASCADE') 
+        .onUpdate('CASCADE')
 
     })
   }
