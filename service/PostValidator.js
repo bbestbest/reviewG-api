@@ -7,7 +7,11 @@ module.exports = async function PostValidator ( data ) {
 
   const rules = {
     topic:'required',
-    body:'required',
+    bodyV1:'required',
+    bodyV2:'required',
+    bodyV3:'required',
+    bodyV4:'required',
+    bodyV5:'required',
     writer:'required'
 
   }
