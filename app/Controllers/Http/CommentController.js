@@ -29,15 +29,14 @@ class CommentController {
         const validateValue = numberTypeParamValidator(id)
 
         if (validateValue.error) 
-        return {status: 500, error: validateValue.error, data: undefined }
+            return {status: 500, error: validateValue.error, data: undefined }
 
-        await Database
-            .select('*')
-            .from('comments')
+        const comment = await Comment
+            .query()
             .where("comment_id",id)
             .first()
 
-        return { status:200,data: admin || {}}
+        return { status:200,data:  comment || {}}
     }
 
     async store({request}) {
@@ -45,42 +44,41 @@ class CommentController {
 
         const validatedData = await CommentValidator(request.body)
         
-
         if (validatedData.error)
           return { status: 422, error: validatedData.error, data: undefined }
 
-       await Database
-          .table('comments')
-          .insert({ comment })
+       const comment = await Comment
+            .query()
+            .insert({ comment })
     
-        return { status: 200, error: undefined, data: { comment } }
+        return { status: 200, error: undefined, data: { comment }}
     }
 
-    async update({request}){
+    async update({request}) {
   
         const{ body,params } = request
         const { id } = params
         const { comment  } = body
   
-       await Database
-        .table ('comments')
-        .where ({ comment_id: id })
-        .update ({ comment  })
+        const commentID = await Comment
+            .query()
+            .where ('comment_id',id)
+            .update ({comment})
   
-        await Database
-        .table ('comments')
-        .where ({ comment_id: id })
-        .first()
+        const comment = await Database
+            .query()
+            .where ('comment_id',id)
+            .first()
   
       return {status: 200 , error: undefined, data: {comment}}
       }
-  
-      async destroy ({ request }) {
+
+    async destroy ({ request }) {
           const { id } =request.params
   
-          await Database
-            .table('comments')
-            .where({ comment_id: id })
+        const comment = await Database
+            .query()
+            .where ('comment_id',id)
             .delete()
           
           return {status: 200 , error: undefined, data: { massage: 'success' }}

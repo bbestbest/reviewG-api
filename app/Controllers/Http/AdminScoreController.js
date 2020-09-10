@@ -75,7 +75,7 @@ class AdminScoreController {
   async destroy ({ request }) {
           const { id } =request.params
   
-          await AdminScore
+        const adminScore = await AdminScore
             .query()
             .where('admin_score_id',id)
             .delete()
