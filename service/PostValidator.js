@@ -3,7 +3,7 @@ const Validator = use("Validator")
 module.exports = async function PostValidator ( data ) {
   if (typeof data !== 'object') throw new Error()
 
-  const { topic,body,writer } = data
+  const { topic,bodyV1,bodyV2,bodyV3,bodyV4,bodyV5,writer  } = data
 
   const rules = {
     topic:'required',
@@ -17,7 +17,7 @@ module.exports = async function PostValidator ( data ) {
   }
 
   const validation = await Validator.validateAll({
-    topic,body,writer
+    topic,bodyV1,bodyV2,bodyV3,bodyV4,bodyV5,writer 
   }, rules)
 
 
