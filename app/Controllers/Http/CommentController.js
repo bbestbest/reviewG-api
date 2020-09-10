@@ -1,6 +1,7 @@
 'use strict'
 
 const Database = use('Database')
+const CommentValidator = require('../../../service/CommentValidator')
 
 function numberTypeParamValidator(number){
     if (Number.isNaN(parseInt(number))) 
@@ -25,7 +26,7 @@ class CommentController {
         if (validateValue.error) 
         return {status: 500, error: validateValue.error, data: undefined }
 
-        const comment = await Database
+        await Database
             .select('*')
             .from('comments')
             .where("comment_id",id)
@@ -37,19 +38,17 @@ class CommentController {
     async store({request}) {
         const { comment } = request.body
 
+        const validatedData = await CommentValidator(request.body)
+        
 
-        const missingKeys = []
+        if (validatedData.error)
+          return { status: 422, error: validatedData.error, data: undefined }
 
-        if(!comment) missingKeys.push('comment ')
-       
-        if (missingKeys.length)
-            return { status: 422, error: `${missingKeys} is missing.`,data: undefined}
-
-
-        const comment = await Database
-            .table('comments')
-            .insert({ comment  })
-        return { status: 200,error: undefined, data: { comment  }}
+       await Database
+          .table('comments')
+          .insert({ comment })
+    
+        return { status: 200, error: undefined, data: { comment } }
     }
 
     async update({request}){
@@ -58,12 +57,12 @@ class CommentController {
         const { id } = params
         const { comment  } = body
   
-        const comment = await Database
+       await Database
         .table ('comments')
         .where ({ comment_id: id })
         .update ({ comment  })
   
-        const comment = await Database
+        await Database
         .table ('comments')
         .where ({ comment_id: id })
         .first()

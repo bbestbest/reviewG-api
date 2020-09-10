@@ -41,7 +41,7 @@ class AdminController {
     }
 
     async store({request}) {
-        const { username,password,email } = request.body
+        const { username, email, password } = request.body
 
         const rules = {
             username : 'required',

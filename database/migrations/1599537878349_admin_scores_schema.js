@@ -7,11 +7,11 @@ class AdminScoresSchema extends Schema {
   up () {
     this.create('admin_scores', (table) => {  
       table.increments('admin_score_id')
-      table.integer("story",1)
-      table.integer("gameplay",1)
-      table.integer("performance",1)
-      table.integer("graphic",1)
-      table.integer("overall",1)
+      table.integer("story",2).notNullable()
+      table.integer("gameplay",2).notNullable()
+      table.integer("performance",2).notNullable()
+      table.integer("graphic",2).notNullable()
+      table.integer("overall",2)
       table.timestamps()
       table.integer("admin_id").unsigned()
 

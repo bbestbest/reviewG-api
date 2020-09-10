@@ -1,6 +1,7 @@
 'use strict'
 
 const Database = use('Database')
+const ScoreValidator = require('../../../service/ScoreValidator')
 
 function numberTypeParamValidator(number){
     if (Number.isNaN(parseInt(number))) 
@@ -36,22 +37,18 @@ class AdminScoreController {
     async store({request}) {
         const { story,gameplay,performance,graphic,overall } = request.body
 
+        const validatedData = await ScoreValidator(request.body)
+        
 
-        const missingKeys = []
+        if (validatedData.error)
+          return { status: 422, error: validatedData.error, data: undefined }
 
-        if(!story ) missingKeys.push('story')
-        if(!gameplay ) missingKeys.push('gameplay')
-        if(!performance ) missingKeys.push('performance')
-        if(!graphic ) missingKeys.push('graphic')
-        if(!overall ) missingKeys.push('overall')
-        if (missingKeys.length)
-            return { status: 422, error: `${missingKeys} is missing.`,data: undefined}
+        const admin = await Database
+          .table('admin_scores')
+          .insert({ story,gameplay,performance,graphic,overall })
+    
+        return { status: 200, error: undefined, data: { story,gameplay,performance,graphic,overall } }
 
-
-        const admin_score = await Database
-            .table('admin_scores')
-            .insert({ story,gameplay,performance,graphic,overall })
-        return { status: 200,error: undefined, data: { story,gameplay,performance,graphic,overall }}
     }
 
     async update({request}){

@@ -1,6 +1,7 @@
 'use strict'
 
 const Database = use('Database')
+const PostValidator = require('../../../service/PostValidator')
 
 function numberTypeParamValidator(number){
     if (Number.isNaN(parseInt(number))) 
@@ -37,28 +38,24 @@ class PostController {
     async store({request}) {
         const { topic,body,writer } = request.body
 
+        const validatedData = await PostValidator(request.body)
+        
 
-        const missingKeys = []
+        if (validatedData.error)
+          return { status: 422, error: validatedData.error, data: undefined }
 
-        if(!story ) missingKeys.push('topic')
-        if(!gameplay ) missingKeys.push('body')
-        if(!performance ) missingKeys.push('writer')
-       
-        if (missingKeys.length)
-            return { status: 422, error: `${missingKeys} is missing.`,data: undefined}
-
-
-        const post = await Database
-            .table('posts')
-            .insert({ topic,body,writer })
-        return { status: 200,error: undefined, data: { topic,body,writer }}
+       await Database
+          .table('posts')
+          .insert({ topic,body,writer })
+    
+        return { status: 200, error: undefined, data: { topic,body,writer } }
     }
 
     async update({request}){
   
         const{ body,params } = request
         const { id } = params
-        const { topic,body,writer } = body
+        
   
         const postId = await Database
         .table ('posts')

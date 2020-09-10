@@ -1,6 +1,8 @@
 'use strict'
 
 const Database = use('Database')
+const Hash = use('Hash')
+const AccountValidator = require("../../../service/AccountValidator")
 
 function numberTypeParamValidator(number){
     if (Number.isNaN(parseInt(number))) 
@@ -34,22 +36,23 @@ class AccountController {
     }
 
     async store({request}) {
-        const { username,password,email } = request.body
 
+        const { username, email, password } = request.body
 
-        const missingKeys = []
+        const validatedData = await AccountValidator(request.body)
 
-        if(!username ) missingKeys.push('username')
-        if(!password ) missingKeys.push('password')
-        if(!email ) missingKeys.push('email')
-        if (missingKeys.length)
-            return { status: 422, error: `${missingKeys} is missing.`,data: undefined}
+    
+        if (validatedData.error)
+          return { status: 422, error: validatedData.error, data: undefined }
 
+        const hashedPassword = await Hash.make(password)
 
         const account = await Database
-            .table('accounts')
-            .insert({ username,password,email })
-        return { status: 200,error: undefined, data: { username,password,email }}
+          .table('accounts')
+          .insert({ username, email, password: hashedPassword })
+    
+        return { status: 200, error: undefined, data: { username, email } }
+
     }
 
     async update({request}){

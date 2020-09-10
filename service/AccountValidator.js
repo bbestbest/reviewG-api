@@ -1,6 +1,6 @@
 const Validator = use("Validator")
 
-module.exports = async function AdminValidator ( data ) {
+module.exports = async function AccountValidator ( data ) {
   if (typeof data !== 'object') throw new Error()
 
   const { username, email, password } = data
