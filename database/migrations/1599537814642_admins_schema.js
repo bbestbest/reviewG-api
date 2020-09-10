@@ -10,7 +10,6 @@ class AdminsSchema extends Schema {
       table.string("username",30).notNullable().unique()
       table.string("password").notNullable()
       table.string("email",60).notNullable().unique()
-      table.integer("account_id").unsigned()
       table.timestamps()
 
     })
