@@ -59,12 +59,13 @@ class PostController {
   
         const{ body,params } = request
         const { id } = params
+        const {  topic,bodyV1,bodyV2,bodyV3,bodyV4,bodyV5,writer } = body
  
         
   
         const postID = await Post
             .where("post_id",id)
-            .update ({topic,body,writer})
+            .update ({ topic,bodyV1,bodyV2,bodyV3,bodyV4,bodyV5,writer})
   
         const post = await Post
             .where("post_id",id)
