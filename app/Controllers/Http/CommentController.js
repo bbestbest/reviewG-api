@@ -47,7 +47,7 @@ class CommentController {
         if (validatedData.error)
           return { status: 422, error: validatedData.error, data: undefined }
 
-       const comment = await Comment
+       await Comment
             .query()
             .insert({ comment })
     
@@ -65,7 +65,7 @@ class CommentController {
             .where ('comment_id',id)
             .update ({comment})
   
-        const comment = await Database
+        await Database
             .query()
             .where ('comment_id',id)
             .first()
@@ -76,7 +76,7 @@ class CommentController {
     async destroy ({ request }) {
           const { id } =request.params
   
-        const comment = await Database
+        await Database
             .query()
             .where ('comment_id',id)
             .delete()

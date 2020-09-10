@@ -14,11 +14,11 @@ function numberTypeParamValidator(number){
 
 class AdminScoreController {
     async index () {
-        const adminScore = await AdminScore
+        const adminscore = await AdminScore
           .query()
           .fetch()
 
-        return { status: 200,error: undefined, data:  admin_score}
+        return { status: 200,error: undefined, data:  adminscore}
     }
 
     async show ({request}) {

@@ -1,6 +1,6 @@
 'use strict'
 
-const ScoreValidator = require('../../../service/UserScoreValidator')
+const ScoreValidator = require('../../../service/ScoreValidator')
 
 const Database = use('Database')
 const UserScore = use('App/Models/User')
@@ -18,6 +18,7 @@ class UserScoreController {
     async index () {
         const user_score = await UserScore
           .query()
+          .fetch()
 
         return { status: 200,error: undefined, data:  user_score}
     }

@@ -59,7 +59,7 @@ class PostController {
   
         const{ body,params } = request
         const { id } = params
-        const {topic,body,writer} = body
+ 
         
   
         const postID = await Post

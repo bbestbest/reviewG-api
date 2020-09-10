@@ -1,4 +1,3 @@
-'use strict'
 
 const UserValidator = require("../../../service/UserValidator")
 
@@ -13,13 +12,13 @@ function numberTypeParamValidator(number){
     return{}
 }
 
-class AccountController {
+class UserController {
     async index () {
         const user = await User
           .query()
           .fetch()
 
-        return { status: 200,error: undefined, data:  account}
+        return { status: 200,error: undefined, data:  user}
     }
 
     async show ({request}) {
@@ -42,7 +41,7 @@ class AccountController {
 
         const { username, email, password } = request.body
 
-        const validatedData = await AccountValidator(request.body)
+        const validatedData = await UserValidator(request.body)
 
         if (validatedData.error)
           return { status: 422, error: validatedData.error, data: undefined }
@@ -86,4 +85,4 @@ class AccountController {
       
 }
 
-module.exports = AccountController
+module.exports = UserController
