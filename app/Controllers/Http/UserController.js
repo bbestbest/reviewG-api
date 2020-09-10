@@ -1,10 +1,10 @@
 'use strict'
 
-const UserValidator = require("../../../service/AccountValidator")
+const UserValidator = require("../../../service/UserValidator")
 
 const Database = use('Database')
-const Hash = use('Hash')
 const User = use('App/Models/User')
+const Validator = use('Validator')
 
 function numberTypeParamValidator(number){
     if (Number.isNaN(parseInt(number))) 
@@ -15,7 +15,9 @@ function numberTypeParamValidator(number){
 
 class AccountController {
     async index () {
-        const account = await Database.table('accounts')
+        const user = await User
+          .query()
+          .fetch()
 
         return { status: 200,error: undefined, data:  account}
     }
@@ -26,12 +28,11 @@ class AccountController {
         const validateValue = numberTypeParamValidator(id)
 
         if (validateValue.error) 
-        return {status: 500, error: validateValue.error, data: undefined }
+          return {status: 500, error: validateValue.error, data: undefined }
 
-        const account = await Database
-            .select('*')
-            .from('account')
-            .where("account_id",id)
+        const user = await User
+            .query()
+            .where("user_id",id)
             .first()
 
         return { status:200,data: account || {}}
@@ -43,47 +44,42 @@ class AccountController {
 
         const validatedData = await AccountValidator(request.body)
 
-    
         if (validatedData.error)
           return { status: 422, error: validatedData.error, data: undefined }
 
-        const hashedPassword = await Hash.make(password)
-
-        const account = await Database
-          .table('accounts')
-          .insert({ username, email, password: hashedPassword })
-    
+        const user = await User
+          .query()
+          .insert({ username, email, password})
         return { status: 200, error: undefined, data: { username, email } }
 
     }
 
     async update({request}){
   
-        const{ body,params } = request
+        const { body,params } = request
         const { id } = params
         const { username,password,email } = body
   
-        const accountId = await Database
-        .table ('accounts')
-        .where ({ account_id: id })
-        .update ({ username,password,email })
+        const userID = await User
+          .table ('accounts')
+          .where("user_id",id)
+          .update ({ username,password,email })
   
-        const account = await Database
-        .table ('accounts')
-        .where ({ account_id: id })
-        .first()
+        const user = await User
+          .where("user_id",id)
+          .first()
   
       return {status: 200 , error: undefined, data: {admin}}
       }
   
-      async destroy ({ request }) {
-          const { id } =request.params
+    async destroy ({ request }) {
+        const { id } =request.params
   
-          await Database
-            .table('accounts')
-            .where({ account_id: id })
-            .delete()
-          
+        const user = await User
+          .query()
+          .where("user_id",id)
+          .detete()
+
           return {status: 200 , error: undefined, data: { massage: 'success' }}
       }
    
