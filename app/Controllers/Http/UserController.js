@@ -34,7 +34,7 @@ class UserController {
             .where("user_id",id)
             .first()
 
-        return { status:200,data: account || {}}
+        return { status:200,data: user || {}}
     }
 
     async store({request}) {

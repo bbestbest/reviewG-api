@@ -1,14 +1,14 @@
 const Validator = use("Validator")
 
-module.exports = async function AccountValidator ( data ) {
+module.exports = async function UserValidator ( data ) {
   if (typeof data !== 'object') throw new Error()
 
   const { username, email, password } = data
 
   const rules = {
     username: 'required',
-    email: 'required|email|unique:user,email',
-    password: 'required|min:8'
+    password: 'required|min:9',
+    email: 'required|email|unique:users,email'
   }
 
   const validation = await Validator.validateAll({
