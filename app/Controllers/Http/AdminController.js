@@ -43,11 +43,11 @@ class AdminController {
     async store({request}) {
         const { username,password,email } = request.body
 
-        const validatedValue = AdminValidator(request.body)
+        const validatedValue = await AdminValidator(request.body)
 
-        if(validatedValue.error) {
-            return { status: 500, error: validateValue.error , data: undefined}
-        }
+        if(validatedValue.error) 
+            return { status: 500, error: validatedValue.error , data: undefined}
+        
 
         const safePassword = await Hash.make(request.input('password'))
 
