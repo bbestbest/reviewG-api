@@ -2,7 +2,17 @@
 
 /** @type {typeof import('@adonisjs/lucid/src/Lucid/Model')} */
 const Model = use('Model')
+const Hash = use('Hash')
 class User extends Model {
+    static boot () {
+        super.boot()
+    
+        this.addHook('beforeCreate', async (userInstance) => {
+            if (userInstance.dirty.password) {
+                userInstance.password = await Hash.make(userInstance.dirty.password)
+              }
+        })
+    }
     static get primaryKey() {
         return 'user_id'
     }
