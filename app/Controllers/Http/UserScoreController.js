@@ -1,9 +1,9 @@
 'use strict'
 
-const ScoreValidator = require('../../../service/ScoreValidator')
+const ScoreValidator = require('../../../service/UserScoreValidator')
 
 const Database = use('Database')
-const UserScore = use('App/Models/User')
+const UserScore = use('App/Models/UserScore')
 const Validator = use('Validator')
 
 function numberTypeParamValidator(number){
