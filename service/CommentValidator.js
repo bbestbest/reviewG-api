@@ -7,7 +7,6 @@ module.exports = async function CommentValidator ( data ) {
 
   const rules = {
     comment:'required'
-
   }
 
   const validation = await Validator.validateAll({

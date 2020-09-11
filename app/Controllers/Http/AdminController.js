@@ -1,6 +1,6 @@
 'use strict'
 
-const AdminValidator = require("../../../service/AdminValidator")
+const AdminValidator = require('../../../service/AdminValidator')
 
 const Database = use('Database')
 const Admin = use('App/Models/Admin')
@@ -41,7 +41,7 @@ class AdminController {
     }
 
     async store({request}) {
-        const { username, email, password } = request.body
+        const { username, password , email } = request.body
 
         const validatedValue = AdminValidator(request.body)
 
@@ -63,12 +63,12 @@ class AdminController {
   
         const adminID = await Admin
             .query()
-            .where ({ admin_id: id })
+            .where ('admin_id',id)
             .update ({ username,password,email })
   
         const admin = await Database
             .query()
-            .where ({ admin_id: id })
+            .where ('admin_id',id)
             .first()
   
       return {status: 200 , error: undefined, data: {admin}}
@@ -79,7 +79,7 @@ class AdminController {
   
           await Admin
             .query()
-            .where({ admin_id: id })
+            .where ('admin_id',id)
             .delete()
           
           return {status: 200 , error: undefined, data: { massage: 'success' }}

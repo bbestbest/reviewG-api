@@ -1,18 +1,18 @@
-const Validator = use("Validator")
+const Validator = use('Validator')
 
 module.exports = async function AdminValidator ( data ) {
   if (typeof data !== 'object') throw new Error()
 
-  const { username, email, password } = data
+  const { username, password , email } = data
 
   const rules = {
     username: 'required',
-    email: 'required|email|unique:admins,email',
-    password: 'required|min:8'
+    password: 'required|min:8',
+    email: 'required|email'
   }
 
   const validation = await Validator.validateAll({
-    username, email, password
+    username, password , email
   }, rules)
 
   return {
