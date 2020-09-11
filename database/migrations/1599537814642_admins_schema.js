@@ -8,7 +8,7 @@ class AdminsSchema extends Schema {
     this.create('admins', (table) => {
       table.increments('admin_id')
       table.string("username",30).notNullable().unique()
-      table.string("password",30).notNullable()
+      table.string("password").notNullable()
       table.string("email",60).notNullable().unique()
       table.timestamps()
     })

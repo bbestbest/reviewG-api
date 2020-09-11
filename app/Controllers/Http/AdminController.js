@@ -1,7 +1,12 @@
 'use strict'
 
+<<<<<<< HEAD
 const AdminValidator = require('../../../service/AdminValidator')
 
+=======
+const AdminValidator = require("../../../service/AdminValidator")
+const Hash = use('Hash')
+>>>>>>> 8b27e813bbf04f089356a4bd68481a13d7ec3807
 const Database = use('Database')
 const Admin = use('App/Models/Admin')
 const Validator = use('Validator')
@@ -43,16 +48,18 @@ class AdminController {
     async store({request}) {
         const { username, password , email } = request.body
 
-        const validatedValue = AdminValidator(request.body)
+        const validatedValue = await AdminValidator(request.body)
 
-        if(validatedValue.error) {
-            return { status: 500, error: validateValue.error , data: undefined}
-        }
+        if(validatedValue.error) 
+            return { status: 500, error: validatedValue.error , data: undefined}
+        
+
+        const safePassword = await Hash.make(request.input('password'))
 
         const admin = await Admin
             .query()
-            .insert({ username,password,email })
-        return { status: 200,error: undefined, data: { username,password,email }}
+            .insert({ username,password:safePassword,email })
+        return { status: 200,error: undefined, data: { username,email }}
     }
 
     async update({request}){
