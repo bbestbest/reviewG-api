@@ -1,6 +1,6 @@
  const Validator = use("Validator")
 
-module.exports = async function ScoreValidator ( data ) {
+module.exports = async function UserScoreValidator ( data ) {
   if (typeof data !== 'object') throw new Error()
 
   const { story,gameplay,performance,graphic } = data
