@@ -46,8 +46,8 @@ class UserController {
           return { status: 422, error: validatedData.error, data: undefined }
 
         const user = await User
-          .query()
-          .insert({ username, password , email})
+          .create({ username,password,email })
+          
         return { status: 200, error: undefined, data: { username, email } }
 
     }
