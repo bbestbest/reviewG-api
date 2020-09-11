@@ -11,7 +11,7 @@ class AdminScoresSchema extends Schema {
       table.integer("gameplay",2).notNullable()
       table.integer("performance",2).notNullable()
       table.integer("graphic",2).notNullable()
-      table.float("overall",2,1)
+      table.float("overall",2)
       table.timestamps()
       table.integer("admin_id").unsigned()
 
