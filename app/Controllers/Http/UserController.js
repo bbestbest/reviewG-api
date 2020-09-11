@@ -39,7 +39,7 @@ class UserController {
 
     async store({request}) {
 
-        const { username, email, password } = request.body
+        const { username, password , email } = request.body
 
         const validatedData = await UserValidator(request.body)
 
@@ -48,7 +48,7 @@ class UserController {
 
         const user = await User
           .query()
-          .insert({ username, email, password})
+          .insert({ username, password , email})
         return { status: 200, error: undefined, data: { username, email } }
 
     }
@@ -60,7 +60,7 @@ class UserController {
         const { username,password,email } = body
   
         const userID = await User
-          .table ('accounts')
+          .query()
           .where("user_id",id)
           .update ({ username,password,email })
   
