@@ -1,6 +1,6 @@
 'use strict'
 
-const AdminScoreValidator = require('../../../service/ScoreValidator')
+const AdminScoreValidator = require('../../../service/UserScoreValidator')
 
 const Database = use('Database')
 const AdminScore = use('App/Models/AdminScore')
@@ -38,18 +38,21 @@ class AdminScoreController {
     }
 
     async store({request}) {
-        const { story,gameplay,performance,graphic,overall } = request.body
+        const { story,gameplay,performance,graphic} = request.body
 
         const validatedData = await AdminScoreValidator(request.body)
         
         if (validatedData.error)
           return { status: 422, error: validatedData.error, data: undefined }
 
+        let overall = (parseFloat(story) + parseFloat(gameplay) + parseFloat(performance) + parseFloat(graphic))/4
+        console.log(overall)
+
         const adminScore = await AdminScore
           .query()
-          .insert({ story,gameplay,performance,graphic,overall })
+          .insert({story,gameplay,performance,graphic,overall})
     
-        return { status: 200, error: undefined, data: { story,gameplay,performance,graphic,overall } }
+        return { status: 200, error: undefined, data: {story,gameplay,performance,graphic,overall} }
 
     }
 
@@ -57,19 +60,22 @@ class AdminScoreController {
   
         const{ body,params } = request
         const { id } = params
-        const { story,gameplay,performance,graphic,overall } = body
+        const { story,gameplay,performance,graphic} = body
   
+        let overall = (parseFloat(story) + parseFloat(gameplay) + parseFloat(performance) + parseFloat(graphic))/4
+        console.log(overall)
+        
         const adminScoreID = await AdminScore
           .query() 
-          .where ('admin_score_id',id)
-          .update ({ story,gameplay,performance,graphic,overall })
+          .where('admin_score_id',id)
+          .update({ story,gameplay,performance,graphic,overall})
 
         const adminScore = await AdminScore
           .query()
           .where ('admin_score_id',id)
           .first()
   
-      return {status: 200 , error: undefined, data: {admin_score}}
+      return {status: 200 , error: undefined, data: {adminScore}}
       }
   
   async destroy ({ request }) {

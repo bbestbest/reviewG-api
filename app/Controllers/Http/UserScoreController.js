@@ -63,8 +63,8 @@ class UserScoreController {
         const { story,gameplay,performance,graphic,overall } = body
   
         const userScoreID = await UserScore
-          .where  ("user_score_id",id)
-          .update ({ story,gameplay,performance,graphic,overall })
+          .where("user_score_id",id)
+          .update({ story,gameplay,performance,graphic,overall })
   
         const userScore = await UserScore
           .where("user_score_id",id)
