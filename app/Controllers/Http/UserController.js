@@ -1,6 +1,5 @@
 
 const UserValidator = require("../../../service/UserValidator")
-const Hash = use('Hash')
 const Database = use('Database')
 const User = use('App/Models/User')
 const Validator = use('Validator')
@@ -46,11 +45,9 @@ class UserController {
         if (validatedData.error)
           return { status: 422, error: validatedData.error, data: undefined }
 
-          const safePassword = await Hash.make(request.input('password'))
-
         const user = await User
           .query()
-          .insert({ username, password:safePassword , email})
+          .insert({ username, password , email})
         return { status: 200, error: undefined, data: { username, email } }
 
     }
