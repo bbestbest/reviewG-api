@@ -8,11 +8,7 @@ class PostsSchema extends Schema {
     this.create('posts', (table) => {
       table.increments('post_id')
       table.string("topic")
-      table.string("bodyV1",10000)
-      table.string("bodyV2",255)
-      table.string("bodyV3",255)
-      table.string("bodyV4",255)
-      table.string("bodyV5",255)
+      table.string("body",10000)
       table.string("writer")
       table.timestamp('comment_date').default(this.fn.now())
       table.timestamps()
