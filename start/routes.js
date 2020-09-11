@@ -22,11 +22,11 @@ Route.get('/', () => {
 
 Route.group(() => { 
 
-  Route.resource('/user', 'UserController')
+  Route.resource('/users', 'UserController')
+  
+  Route.resource('/user_scores', 'UserScoreController')
   
   Route.resource('/admins', 'AdminController')
-
-  Route.resource('/user_scores', 'UserScoreController')
 
   Route.resource('/admin_scores', 'AdminScoreController')
 
