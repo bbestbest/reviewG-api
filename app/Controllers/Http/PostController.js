@@ -1,9 +1,8 @@
 'use strict'
 
 const PostValidator = require('../../../service/PostValidator')
-
-const Database = use('Database')
-const Post = use('App/Models/Post')
+const PostUtil = require('../../../util/PostUtil.func')
+const PostModel = use('App/Models/Post')
 const Validator = use('Validator')
 
 function numberTypeParamValidator(number){
@@ -15,32 +14,30 @@ function numberTypeParamValidator(number){
 
 class PostController {
 
-    async index () {
-        const post = await Post
-            .query()
-            .fetch()
+    async index ({request}) {
+        const { references } = request.qs
+        const post = await PostUtil(PostModel).getAll(references)
 
         return { status: 200,error: undefined, data:  post}
     }
 
     async show ({request}) {
         const { id } = request.params
+        const {references} = request.qs
 
         const validateValue = numberTypeParamValidator(id)
 
         if (validateValue.error) 
         return {status: 500, error: validateValue.error, data: undefined }
 
-        const post = await Post
-            .query()
-            .where("post_id",id)
-            .first()
+        const post = await PostUtil(PostModel).getById(id,references)
 
         return { status:200,data: post || {}}
     }
 
     async store({request}) {
         const { topic,body,writer } = request.body
+        const {references} = request.qs
 
         const validatedData = await PostValidator(request.body)
         
@@ -48,41 +45,35 @@ class PostController {
         if (validatedData.error)
           return { status: 422, error: validatedData.error, data: undefined }
 
-        const post = await Post
-            .query()
-            .insert({topic,body,writer})
+        await PostUtil(PostModel).create({topic,body,writer},references)
     
-        return { status: 200, error: undefined, data: { topic,body,writer } }
+        return { status: 200, error: undefined, data:  post  }
     }
 
     async update({request}) {
   
-        const{ topic,body,params } = request
+        const{ params,qs } = request
         const { id } = params
-        // const { topic,body,writer } = body
- 
-        
+        const { topic,body,writer } = body
+        const {references} = qs
+        const post = await PostUtil(PostModel).updateByID(id,{topic,body,writer},references)
   
-        const postID = await Post
-            .where("post_id",id)
-            .update ({ topic,body,writer})
-  
-        const post = await Post
-            .where("post_id",id)
-            .first()
-  
-      return {status: 200 , error: undefined, data: {post}}
+      return {status: 200 , error: undefined, data: post}
       }
   
     async destroy ({ request }) {
-          const { id } =request.params
-  
-        const post = await Post
-            .query()
-            .where({post_id:id})
-            .delete()
-          
-          return {status: 200 , error: undefined, data: { massage: 'success' }}
+        const { params , qs } =request
+        const { id } = params
+        const {references} = qs
+
+        const post = await PostUtil(PostModel).deleteByID(id)
+
+        if(post) {
+            return {status: 200 , error: undefined, data: { massage: ' success' }}
+        }
+        else {
+            return {status: 200 , error: undefined, data: { massage: ` ${id} not found` }}
+        }
       }
    
     
