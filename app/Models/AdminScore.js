@@ -5,7 +5,7 @@ const Model = use('Model')
 
 class AdminScore extends Model {
     static get primaryKey() {
-        return 'admin_id'
+        return 'admin_score_id'
     }
     static get createdAtColumn() {
         return null
