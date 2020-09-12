@@ -1,6 +1,6 @@
 module.exports = function(PostModel){
     const _withReferences = (reference) => {
-        const _Post = PostModel.quety()
+        const _Post = PostModel.query()
             if(reference){
                 const extractedReferences = references.split(",")
                 extractedReferences.forEach((references) => _Comment.with(references))
