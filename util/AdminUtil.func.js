@@ -16,6 +16,7 @@ module.exports = function(AdminModel) {
             return _withReferences(references)
                 .where({admin_id})
                 .fetch()
+                .then((response) => response.first())
         },
         create: async (attributes , references) => {
             const {admin_id} = await AdminModel.create(attributes)
@@ -23,6 +24,7 @@ module.exports = function(AdminModel) {
             return _withReferences(references)
                 .where({admin_id})
                 .fetch()
+                .then((response) => response.first())
         },
         updateByID: async (admin_id,attributes,references) => {
             let admin = await AdminModel.find(admin_id)
@@ -32,6 +34,7 @@ module.exports = function(AdminModel) {
             return _withReferences(references)
                 .where({admin_id})
                 .fetch()
+                .then((response) => response.first())
         },
         deleteByID: async (admin_id) => {
             const admin = await AdminModel.find(admin_id)
