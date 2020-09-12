@@ -15,10 +15,10 @@
 const Factory = use('Factory')
 
 Factory.blueprint('App/Models/Admin', (faker) => {
-  return {
-    username: faker.username(),
-    password: faker.password(),
-    email: faker.email()
+    return {
+      username: faker.username(),
+      password: faker.password(),
+      email: faker.email()
   }
 })
 
@@ -51,7 +51,6 @@ Factory.blueprint('App/Models/UserScore', (faker) => {
 Factory.blueprint('App/Models/Comment', (faker) => {
     return {
       comment: faker.sentence()
-
     }
 })
 

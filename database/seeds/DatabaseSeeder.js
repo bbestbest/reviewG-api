@@ -12,7 +12,6 @@
 
 /** @type {import('@adonisjs/lucid/src/Factory')} */
 const Factory = use('Factory')
-const OverAllScore = require('../../util/OverAllScore')
 
 class DatabaseSeeder {
   async run () {
@@ -23,18 +22,15 @@ class DatabaseSeeder {
     const user = await Factory
     .model('App/Models/User')
     .createMany(10)
-
     
     const admin_score = await Factory
     .model('App/Models/AdminScore')
     .createMany(10)
-
     
     const user_score = await Factory
     .model('App/Models/UserScore')
     .createMany(10)
 
-    
     const comment = await Factory
     .model('App/Models/Comment')
     .createMany(10)
