@@ -21,7 +21,7 @@ module.exports = function(AdminModel) {
             const {admin_id} = await AdminModel.create(attributes)
 
             return _withReferences(references)
-                .where({admin_id})
+               
                 .fetch()
         },
         updateByID: async (admin_id,attributes,references) => {
