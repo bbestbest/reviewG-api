@@ -12,10 +12,10 @@
 
 /** @type {import('@adonisjs/lucid/src/Factory')} */
 const Factory = use('Factory')
+const OverAllScore = require('../../util/OverAllScore')
 
-class BlueprintSeeder {
+class DatabaseSeeder {
   async run () {
-
     const admin = await Factory
     .model('App/Models/Admin')
     .createMany(10)
@@ -42,10 +42,7 @@ class BlueprintSeeder {
     const post = await Factory
     .model('App/Models/Post')
     .createMany(10)
-
   }
-
-
 }
 
-module.exports = BlueprintSeeder
+module.exports = DatabaseSeeder
