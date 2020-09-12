@@ -40,13 +40,15 @@ class UserScoreController {
     }
 
     async store({request}) {
-        const { story,gameplay,performance,graphic,overall } = request.body
+        const { story,gameplay,performance,graphic } = request.body
 
         const validatedData = await ScoreValidator(request.body)
         
-
         if (validatedData.error)
           return { status: 422, error: validatedData.error, data: undefined }
+
+        let overall = (parseFloat(story) + parseFloat(gameplay) + parseFloat(performance) + parseFloat(graphic))/4
+          console.log(overall)
 
         const userScore = await UserScore
           .query()
