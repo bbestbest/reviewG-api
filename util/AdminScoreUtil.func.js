@@ -12,34 +12,38 @@ module.exports = function(AdminScoreModel) {
         getAll: (references) => {
             return _withReferences(references).fetch()
         },
-        getByID: (user_score_id,references) => {
+        getByID: (admin_score_id,references) => {
             return _withReferences(references)
-                .where({user_score_id})
+                .where({admin_score_id})
                 .fetch()
+                .then((response) => response.first())
         },
         create: async (attributes , references) => {
-            const {user_score_id} = await UserModel.create(attributes)
+            const {admin_score_id} = await AdminModel.create(attributes)
 
             return _withReferences(references)
-                .where({user_score_id})
+                .where({admin_score_id})
                 .fetch()
+                .then((response) => response.first())
         },
         updateByID: async (user_score_id,attributes,references) => {
-            let userScore = await AdminScoreModel.find(user_score_id)
-            userScore.merge(attributes)
-            await userScore.save()
+            let adminScore = await AdminScoreModel.find(admin_score_id)
+            adminScore.merge(attributes)
+            await adminScore.save()
 
             return _withReferences(references)
-                .where({user_score_id})
+                .where({admin_score_id})
                 .fetch()
+                .then((response) => response.first())
+
         },
         deleteByID: async (user_score_id) => {
-            const userScore = await AdminScoreModel.find(user_score_id)
-            if(user !== null) {
-                return userScore.delete()
+            const adminScore = await AdminScoreModel.find(admin_score_id)
+            if(adminScore !== null) {
+                return adminScore.delete()
             }
             else {
-                return userScore
+                return adminScore
             }
         }
     }
