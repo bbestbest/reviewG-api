@@ -16,6 +16,7 @@ module.exports = function(UserModel) {
             return _withReferences(references)
                 .where({user_id})
                 .fetch()
+                .then((response) => response.first())
         },
         create: async (attributes , references) => {
             const {user_id} = await UserModel.create(attributes)
@@ -23,6 +24,7 @@ module.exports = function(UserModel) {
             return _withReferences(references)
                 .where({user_id})
                 .fetch()
+                .then((response) => response.first())
         },
         updateByID: async (user_id,attributes,references) => {
             let user = await UserModel.find(user_id)
@@ -32,6 +34,7 @@ module.exports = function(UserModel) {
             return _withReferences(references)
                 .where({user_id})
                 .fetch()
+                .then((response) => response.first())
         },
         deleteByID: async (user_id) => {
             const user = await UserModel.find(user_id)
