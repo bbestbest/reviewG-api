@@ -1,7 +1,7 @@
 
 const UserValidator = require("../../../service/UserValidator")
-const Database = use('Database')
-const User = use('App/Models/User')
+const UserUtil = require("../../../util/UserUtil.func")
+const UserModel = use('App/Models/User')
 const Validator = use('Validator')
 
 function numberTypeParamValidator(number){
@@ -12,76 +12,68 @@ function numberTypeParamValidator(number){
 }
 
 class UserController {
-    async index () {
-        const user = await User
-          .query()
-          .fetch()
+    async index ({request}) {
+      const { references } = request.qs
 
-        return { status: 200,error: undefined, data:  user}
+      const user = await UserUtil(UserModel).getAll(references)
+
+      return { status: 200,error: undefined, data: user}
     }
 
     async show ({request}) {
-        const { id } = request.params
+      const { id } = request.params
+      const { references } = request.qs
 
-        const validateValue = numberTypeParamValidator(id)
+      const validateValue = numberTypeParamValidator(id)
 
-        if (validateValue.error) 
-          return {status: 500, error: validateValue.error, data: undefined }
+      if (validateValue.error) 
+        return {status: 500, error: validateValue.error, data: undefined }
 
-        const user = await User
-            .query()
-            .where("user_id",id)
-            .first()
+      const user = await UserUtil(UserModel).getByID(id,references)
 
-        return { status:200,data: user || {}}
+      return { status:200,data: user}
     }
 
     async store({request}) {
 
-        const { username, password , email } = request.body
+      const { username, password , email } = request.body
+      const { references } = request.qs
 
-        const validatedData = await UserValidator(request.body)
+      const validatedData = await UserValidator(request.body)
 
-        if (validatedData.error)
-          return { status: 422, error: validatedData.error, data: undefined }
+      if (validatedData.error)
+        return { status: 422, error: validatedData.error, data: undefined }
 
-        const user = await User
-          .create({ username,password,email })
+      const user = await UserUtil(UserModel).create({username,password,email},references)
           
-        return { status: 200, error: undefined, data: { username, email } }
-
+      return { status: 200, error: undefined, data: user }
     }
 
-    async update({request}){
+    async update({request}) {
   
-        const { body,params } = request
-        const { id } = params
-        const { username,password,email } = body
+      const { body,params,qs } = request
+      const { id } = params
+      const { username,password,email } = body
+      const { references } = qs
   
-        const userID = await User
-          .query()
-          .where("user_id",id)
-          .update ({ username,password,email })
+      const user = await UserUtil(UserModel).updateByID({username,password,email},references)
   
-        const user = await User
-          .where("user_id",id)
-          .first()
-  
-      return {status: 200 , error: undefined, data: {admin}}
-      }
+      return {status: 200 , error: undefined, data: user}
+    }
   
     async destroy ({ request }) {
-        const { id } =request.params
+      const { id } =request.params
+      const { references } = request.qs
   
-        const user = await User
-          .query()
-          .where("user_id",id)
-          .detete()
+      const user = await UserUtil(UserModel).deleteByID(id)
 
-          return {status: 200 , error: undefined, data: { massage: 'success' }}
+      if(user) {
+        return {status: 200 , error: undefined, data: { massage: ' success' }}
       }
-   
-      
+      else {
+        return {status: 200 , error: undefined, data: { massage: ` ${id} not found` }}
+      }
+  }  
 }
 
 module.exports = UserController
