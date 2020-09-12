@@ -19,14 +19,13 @@ module.exports = function(AdminScoreModel) {
                 .then((response) => response.first())
         },
         create: async (attributes , references) => {
-            const {admin_score_id} = await AdminModel.create(attributes)
+            const {admin_score_id} = await AdminScoreModel.create(attributes)
 
             return _withReferences(references)
-                .where({admin_score_id})
                 .fetch()
                 .then((response) => response.first())
         },
-        updateByID: async (user_score_id,attributes,references) => {
+        updateByID: async (admin_score_id,attributes,references) => {
             let adminScore = await AdminScoreModel.find(admin_score_id)
             adminScore.merge(attributes)
             await adminScore.save()
@@ -37,7 +36,7 @@ module.exports = function(AdminScoreModel) {
                 .then((response) => response.first())
 
         },
-        deleteByID: async (user_score_id) => {
+        deleteByID: async (admin_score_id) => {
             const adminScore = await AdminScoreModel.find(admin_score_id)
             if(adminScore !== null) {
                 return adminScore.delete()

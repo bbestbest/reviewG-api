@@ -61,7 +61,7 @@ class UserScoreController {
   
         const { body,params } = request
         const { id } = params
-        const { story,gameplay,performance,graphic,overall } = body
+        const { story,gameplay,performance,graphic} = body
   
         const overall = OverAllScore(parseFloat(story),parseFloat(gameplay),parseFloat(performance),parseFloat(graphic))
 

@@ -56,7 +56,7 @@ class UserController {
       const { username,password,email } = body
       const { references } = qs
   
-      const user = await UserUtil(UserModel).updateByID({username,password,email},references)
+      const user = await UserUtil(UserModel).updateByID(id,{username,password,email},references)
   
       return {status: 200 , error: undefined, data: user}
     }

@@ -22,7 +22,7 @@ module.exports = function(AdminModel) {
             const {admin_id} = await AdminModel.create(attributes)
 
             return _withReferences(references)
-                .where({admin_id})
+               
                 .fetch()
                 .then((response) => response.first())
         },

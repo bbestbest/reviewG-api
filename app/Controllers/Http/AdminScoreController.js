@@ -16,7 +16,7 @@ class AdminScoreController {
     async index ({request}) {
       const { references } = request.qs
 
-      const adminscore = await AdminScoreUtil(AdminScoreModel).getAll()
+      const adminscore = await AdminScoreUtil(AdminScoreModel).getAll(references)
 
       return { status: 200,error: undefined, data:  adminscore}
     }
@@ -58,31 +58,27 @@ class AdminScoreController {
       const { id } = params
       const { story,gameplay,performance,graphic} = body
       const { references } = qs
-  
-      const overall = OverAllScore(parseFloat(story),parseFloat(gameplay),parseFloat(performance),parseFloat(graphic))
-        
-      const adminScoreID = await AdminScore
-          .query() 
-          .where('admin_score_id',id)
-          .update({ story,gameplay,performance,graphic,overall})
 
-      const adminScore = await AdminScore
-          .query()
-          .where ('admin_score_id',id)
-          .first()
+      const overall = OverAllScore(parseFloat(story),parseFloat(gameplay),parseFloat(performance),parseFloat(graphic))
+
+      const adminScore = await AdminScoreUtil(AdminScoreModel).updateByID(id,{story,gameplay,performance,graphic,overall},references)
   
-      return {status: 200 , error: undefined, data: {adminScore}}
+      return {status: 200 , error: undefined, data: {adminScore,overall}}
       }
   
   async destroy ({ request }) {
-          const { id } =request.params
-  
-        const adminScore = await AdminScore
-            .query()
-            .where('admin_score_id',id)
-            .delete()
-          
-      return {status: 200 , error: undefined, data: { massage: 'success' }}
+    const { params , qs } =request
+    const { id } = params
+    const { references} = request.qs
+
+    const adminScore = await AdminScoreUtil(AdminScoreModel).deleteByID(id)
+    
+    if(adminScore) {
+        return {status: 200 , error: undefined, data: { massage: ' success' }}
+    }
+    else {
+        return {status: 200 , error: undefined, data: { massage: ` ${id} not found` }}
+    }
       }
 }
 
