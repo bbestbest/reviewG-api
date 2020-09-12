@@ -48,7 +48,7 @@ class AdminScoreController {
 
       const adminScore = await AdminScoreUtil(AdminScoreModel).create({story,gameplay,performance,graphic,overall},references)
     
-      return { status: 200, error: undefined, data: {story,gameplay,performance,graphic,overall} }
+      return { status: 200, error: undefined, data: adminScore }
 
     }
 
@@ -63,13 +63,13 @@ class AdminScoreController {
 
       const adminScore = await AdminScoreUtil(AdminScoreModel).updateByID(id,{story,gameplay,performance,graphic,overall},references)
   
-      return {status: 200 , error: undefined, data: {adminScore,overall}}
+      return {status: 200 , error: undefined, data: adminScore}
       }
   
   async destroy ({ request }) {
     const { params , qs } =request
     const { id } = params
-    const { references} = request.qs
+    const { references} = qs
 
     const adminScore = await AdminScoreUtil(AdminScoreModel).deleteByID(id)
     

@@ -2,9 +2,10 @@
 
 const ScoreValidator = require('../../../service/UserScoreValidator')
 const OverAllScore = require('../../../util/OverAllScoreUtil')
-const Database = use('Database')
-const UserScore = use('App/Models/UserScore')
+const UserScoreUtil = require('../../../util/UserScoreUtil.func')
+const UserScoreModel = use('App/Models/UserScore')
 const Validator = use('Validator')
+const Database = use('Database')
 
 function numberTypeParamValidator(number){
     if (Number.isNaN(parseInt(number))) 
@@ -15,32 +16,31 @@ function numberTypeParamValidator(number){
 
 class UserScoreController {
 
-    async index () {
-        const user_score = await UserScore
-          .query()
-          .fetch()
+    async index ({request}) {
+      const { references } = request.qs
+      const userscore = await UserScoreUtil(UserScoreModel).getAll(references)
 
-        return { status: 200,error: undefined, data:  user_score}
+        return { status: 200,error: undefined, data:  userscore}
     }
 
     async show ({request}) {
-        const { id } = request.params
+      const { id } = request.params
+      const { references } = request.qs
 
-        const validateValue = numberTypeParamValidator(id)
-
-        if (validateValue.error) 
+      const validateValue = numberTypeParamValidator(id)
+          
+      if (validateValue.error) {
           return {status: 500, error: validateValue.error, data: undefined }
+      }
 
-        const userScore = await UserScore
-          .query()
-          .where("user_score_id",id)
-          .first()
+      const userscore = await UserScoreUtil(UserScoreModel).getByID(id,references)
 
-        return { status:200,data: admin || {}}
+      return { status:200,data: userscore || {}}
     }
 
     async store({request}) {
         const { story,gameplay,performance,graphic} = request.body
+        const { references } = request.qs
 
         const validatedData = await ScoreValidator(request.body)
         
@@ -49,43 +49,40 @@ class UserScoreController {
 
         const overall = OverAllScore(parseFloat(story),parseFloat(gameplay),parseFloat(performance),parseFloat(graphic))
 
-        const userScore = await UserScore
-          .query()
-          .insert({ story,gameplay,performance,graphic,overall})
+        const userScore = await UserScoreUtil(UserScoreModel).create({story,gameplay,performance,graphic,overall},references)
     
-        return { status: 200, error: undefined, data: { story,gameplay,performance,graphic,overall } }
+        return { status: 200, error: undefined, data: userScore }
 
     }
 
     async update({request}){
   
-        const { body,params } = request
-        const { id } = params
-        const { story,gameplay,performance,graphic} = body
-  
-        const overall = OverAllScore(parseFloat(story),parseFloat(gameplay),parseFloat(performance),parseFloat(graphic))
+      const { body,params,qs } = request
+      const { id } = params
+      const { story,gameplay,performance,graphic} = body
+      const { references } = qs
 
-        const userScoreID = await UserScore
-          .where("user_score_id",id)
-          .update({ story,gameplay,performance,graphic,overall })
+      const overall = OverAllScore(parseFloat(story),parseFloat(gameplay),parseFloat(performance),parseFloat(graphic))
+
+      const userScore = await UserScoreUtil(UserScoreModel).updateByID(id,{story,gameplay,performance,graphic,overall},references)
   
-        const userScore = await UserScore
-          .where("user_score_id",id)
-          .first()
-  
-      return {status: 200 , error: undefined, data: {user_score}}
+      return {status: 200 , error: undefined, data: userScore}
       }
   
     async destroy ({ request }) {
-        const { id } =request.params
+      const { params , qs } =request
+      const { id } = params
+      const { references} = qs
   
-        const userScore = await Database
-          .table('user_score')
-          .where({ user_score_id: id })
-          .delete()
-          return {status: 200 , error: undefined, data: { massage: 'success' }}
+      const userScore = await UserScoreUtil(UserScoreModel).deleteByID(id)
+      
+      if(userScore) {
+          return {status: 200 , error: undefined, data: { massage: ' success' }}
       }
-   
+      else {
+          return {status: 200 , error: undefined, data: { massage: ` ${id} not found` }}
+      }
+      }
 }
 
 module.exports = UserScoreController
