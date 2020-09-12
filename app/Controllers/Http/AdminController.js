@@ -48,9 +48,8 @@ class AdminController {
             return { status: 422, error: validatedValue.error , data: undefined}
         
         const admin = await Admin
-            .query()
-            .insert({ username,password,email })
-
+            .create({ username,password,email })
+        
         return { status: 200,error: undefined, data: { username,email }}
     }
 

@@ -44,7 +44,6 @@ class UserScoreController {
 
         const validatedData = await ScoreValidator(request.body)
         
-
         if (validatedData.error)
           return { status: 422, error: validatedData.error, data: undefined }
 
