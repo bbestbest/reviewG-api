@@ -1,6 +1,7 @@
 'use strict'
 
 const AdminScoreValidator = require('../../../service/UserScoreValidator')
+const OverAllScore = require("../../../util/OverAllScore")
 
 const Database = use('Database')
 const AdminScore = use('App/Models/AdminScore')
@@ -45,8 +46,7 @@ class AdminScoreController {
         if (validatedData.error)
           return { status: 422, error: validatedData.error, data: undefined }
 
-        let overall = (parseFloat(story) + parseFloat(gameplay) + parseFloat(performance) + parseFloat(graphic))/4
-        console.log(overall)
+        const overall = OverAllScore(parseFloat(story),parseFloat(gameplay),parseFloat(performance),parseFloat(graphic))
 
         const adminScore = await AdminScore
           .query()
@@ -62,8 +62,7 @@ class AdminScoreController {
         const { id } = params
         const { story,gameplay,performance,graphic} = body
   
-        let overall = (parseFloat(story) + parseFloat(gameplay) + parseFloat(performance) + parseFloat(graphic))/4
-        console.log(overall)
+        const overall = OverAllScore(parseFloat(story),parseFloat(gameplay),parseFloat(performance),parseFloat(graphic))
         
         const adminScoreID = await AdminScore
           .query() 
