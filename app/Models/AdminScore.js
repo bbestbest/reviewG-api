@@ -2,10 +2,11 @@
 
 /** @type {typeof import('@adonisjs/lucid/src/Lucid/Model')} */
 const Model = use('Model')
+const OverallScoreUtil = require('../../util/OverAllScoreUtil')
 
 class AdminScore extends Model {
     static get primaryKey() {
-        return 'admin_id'
+        return 'admin_score_id'
     }
     static get createdAtColumn() {
         return null
