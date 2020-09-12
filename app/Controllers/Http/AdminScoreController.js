@@ -1,7 +1,7 @@
 'use strict'
 
 const AdminScoreValidator = require('../../../service/AdminScoreValidator')
-const OverAllScore = require('../../../util/OverAllScore')
+const OverAllScore = require('../../../util/OverAllScoreUtil')
 const AdminScoreUtil = require('../../../util/AdminScoreUtil.func')
 const AdminScoreModel = use('App/Models/AdminScore')
 const Validator = use('Validator')
