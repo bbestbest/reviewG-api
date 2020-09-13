@@ -3,7 +3,6 @@
 const CommentValidator = require('../../../service/CommentValidator')
 const CommentUtil = require('../../../util/CommentUtil.func')
 const CommentModel = use('App/Models/Comment')
-const Validator = use('Validator')
 const numberTypeParamValidator = require('../../../util/numberTypeParamValidator.func')
 
 class CommentController {

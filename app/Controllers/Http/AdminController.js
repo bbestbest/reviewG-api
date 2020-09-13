@@ -4,8 +4,6 @@ const AdminValidator = require('../../../service/AdminValidator')
 const AdminModel = use('App/Models/Admin')
 const AdminUtil = require('../../../util/AdminUtil.func')
 const numberTypeParamValidator = require('../../../util/numberTypeParamValidator.func')
-const Validator = use('Validator')
-
 
 class AdminController {
 

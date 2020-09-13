@@ -6,10 +6,6 @@ const UserScoreUtil = require('../../../util/UserScoreUtil.func')
 const UserScoreModel = use('App/Models/UserScore')
 const numberTypeParamValidator = require('../../../util/numberTypeParamValidator.func')
 
-const Validator = use('Validator')
-const Database = use('Database')
-
-
 class UserScoreController {
 
     async index ({request}) {

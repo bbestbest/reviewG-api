@@ -2,7 +2,6 @@
 const UserValidator = require("../../../service/UserValidator")
 const UserUtil = require("../../../util/UserUtil.func")
 const UserModel = use('App/Models/User')
-const Validator = use('Validator')
 const numberTypeParamValidator = require('../../../util/numberTypeParamValidator.func')
 
 class UserController {
