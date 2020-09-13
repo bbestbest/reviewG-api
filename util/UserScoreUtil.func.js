@@ -22,6 +22,7 @@ module.exports = function(UserScoreModel) {
             const {user_score_id} = await UserScoreModel.create(attributes)
 
             return _withReferences(references)
+                .where({user_score_id})
                 .fetch()
                 .then((response) => response.first())
         },

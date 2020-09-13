@@ -19,8 +19,8 @@ module.exports = function(PostModel){
         },
         create: async (attributes,reference) => {
             const {post_id} = await PostModel.create(attributes)
-
             return _withReferences(reference)
+            .where({post_id})
             .fetch()
         },
         updateByID: async(post_id,attributes,references) =>{
