@@ -10,7 +10,7 @@ class PostsSchema extends Schema {
       table.string("topic")
       table.string("body",10000)
       table.string("writer")
-      table.timestamp('comment_date').default(this.fn.now())
+      table.timestamp('post_date').default(this.fn.now())
       table.timestamps()
       table.integer("admin_id").unsigned()
       table.integer("user_score_id").unsigned()
