@@ -37,9 +37,9 @@ class CommentController {
         if (validatedData.error)
           return { status: 422, error: validatedData.error, data: undefined }
 
-        await CommentUtil(CommentModel).create({comment},references)
+        const comments = await CommentUtil(CommentModel).create({comment},references)
     
-        return { status: 200, error: undefined, data:  comment }
+        return { status: 200, error: undefined, data:  comments }
     }
 
     async update({request}) {
@@ -57,7 +57,7 @@ class CommentController {
     async destroy ({ request }) {
         const { params , qs } =request
         const { id } = params
-        const {references} = request.qs
+        const {references} = qs
 
         const comment = await CommentUtil(CommentModel).deleteByID(id)
 
