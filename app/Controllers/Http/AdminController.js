@@ -3,14 +3,9 @@
 const AdminValidator = require('../../../service/AdminValidator')
 const AdminModel = use('App/Models/Admin')
 const AdminUtil = require('../../../util/AdminUtil.func')
+const numberTypeParamValidator = require('../../../util/numberTypeParamValidator.func')
 const Validator = use('Validator')
 
-function numberTypeParamValidator(number){
-    if (Number.isNaN(parseInt(number))) 
-    return { error: `params: ${number} is not supported, please use number type param instead`}
-    
-    return {}
-}
 
 class AdminController {
 
@@ -24,7 +19,6 @@ class AdminController {
     async show ({request}) {
         const { id } = request.params
         const { references } = request.qs
-
         const validateValue = numberTypeParamValidator(id)
             
         if (validateValue.error) {
@@ -39,7 +33,6 @@ class AdminController {
     async store({request}) {
         const { username, password , email } = request.body
         const { references } = request.qs;
-
         const validatedValue = await AdminValidator(request.body)
 
         if(validatedValue.error) 

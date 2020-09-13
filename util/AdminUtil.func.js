@@ -19,10 +19,10 @@ module.exports = function(AdminModel) {
                 .then((response) => response.first())
         },
         create: async (attributes , references) => {
-            const {admin_id} = await AdminModel.create(attributes)
+            const admin_id = await AdminModel.create(attributes)
 
             return _withReferences(references)
-               
+                .where(admin_id)
                 .fetch()
                 .then((response) => response.first())
         },

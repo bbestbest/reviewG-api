@@ -11,7 +11,7 @@ class UserScoresSchema extends Schema {
       table.integer("gameplay",2)
       table.integer("performance",2)
       table.integer("graphic",2)
-      table.integer("overall",4)
+      table.float("overall",4)
       table.timestamps()
       table.integer("user_id").unsigned()
 

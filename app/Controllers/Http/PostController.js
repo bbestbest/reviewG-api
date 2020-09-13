@@ -4,13 +4,7 @@ const PostValidator = require('../../../service/PostValidator')
 const PostUtil = require('../../../util/PostUtil.func')
 const PostModel = use('App/Models/Post')
 const Validator = use('Validator')
-
-function numberTypeParamValidator(number){
-    if (Number.isNaN(parseInt(number))) 
-    return{ error: `params: ${number} is not supported, please use number type param instead`}
-    
-    return{}
-}
+const numberTypeParamValidator = require('../../../util/numberTypeParamValidator.func')
 
 class PostController {
 
@@ -24,13 +18,12 @@ class PostController {
     async show ({request}) {
         const { id } = request.params
         const {references} = request.qs
-
         const validateValue = numberTypeParamValidator(id)
 
         if (validateValue.error) 
         return {status: 500, error: validateValue.error, data: undefined }
 
-        const post = await PostUtil(PostModel).getById(id,references)
+        const post = await PostUtil(PostModel).getByID(id,references)
 
         return { status:200,data: post || {}}
     }
@@ -45,7 +38,7 @@ class PostController {
         if (validatedData.error)
           return { status: 422, error: validatedData.error, data: undefined }
 
-        await PostUtil(PostModel).create({topic,body,writer},references)
+        const post = await PostUtil(PostModel).create({topic,body,writer},references)
     
         return { status: 200, error: undefined, data:  post  }
     }
@@ -54,7 +47,7 @@ class PostController {
   
         const{ params,qs } = request
         const { id } = params
-        const { topic,body,writer } = body
+        const { topic,body,writer } = request.body
         const {references} = qs
         const post = await PostUtil(PostModel).updateByID(id,{topic,body,writer},references)
   

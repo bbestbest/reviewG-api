@@ -3,13 +3,7 @@ const UserValidator = require("../../../service/UserValidator")
 const UserUtil = require("../../../util/UserUtil.func")
 const UserModel = use('App/Models/User')
 const Validator = use('Validator')
-
-function numberTypeParamValidator(number){
-    if (Number.isNaN(parseInt(number))) 
-    return{ error: `params: ${number} is not supported, please use number type param instead`}
-    
-    return{}
-}
+const numberTypeParamValidator = require('../../../util/numberTypeParamValidator.func')
 
 class UserController {
     async index ({request}) {

@@ -22,6 +22,7 @@ module.exports = function(AdminScoreModel) {
             const {admin_score_id} = await AdminScoreModel.create(attributes)
 
             return _withReferences(references)
+                .where({admin_score_id})
                 .fetch()
                 .then((response) => response.first())
         },

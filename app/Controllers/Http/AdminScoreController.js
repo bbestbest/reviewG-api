@@ -5,12 +5,7 @@ const OverAllScore = require('../../../util/OverAllScoreUtil')
 const AdminScoreUtil = require('../../../util/AdminScoreUtil.func')
 const AdminScoreModel = use('App/Models/AdminScore')
 const Validator = use('Validator')
-function numberTypeParamValidator(number){
-    if (Number.isNaN(parseInt(number))) 
-    return{ error: `params: ${number} is not supported, please use number type param instead`}
-    
-    return{}
-}
+const numberTypeParamValidator = require('../../../util/numberTypeParamValidator.func')
 
 class AdminScoreController {
     async index ({request}) {
@@ -24,7 +19,6 @@ class AdminScoreController {
     async show ({request}) {
       const { id } = request.params
       const { references } = request.qs
-
       const validateValue = numberTypeParamValidator(id)
 
       if (validateValue.error) 
@@ -48,7 +42,7 @@ class AdminScoreController {
 
       const adminScore = await AdminScoreUtil(AdminScoreModel).create({story,gameplay,performance,graphic,overall},references)
     
-      return { status: 200, error: undefined, data: {story,gameplay,performance,graphic,overall} }
+      return { status: 200, error: undefined, data: adminScore }
 
     }
 
@@ -63,13 +57,13 @@ class AdminScoreController {
 
       const adminScore = await AdminScoreUtil(AdminScoreModel).updateByID(id,{story,gameplay,performance,graphic,overall},references)
   
-      return {status: 200 , error: undefined, data: {adminScore,overall}}
+      return {status: 200 , error: undefined, data: adminScore}
       }
   
   async destroy ({ request }) {
     const { params , qs } =request
     const { id } = params
-    const { references} = request.qs
+    const { references} = qs
 
     const adminScore = await AdminScoreUtil(AdminScoreModel).deleteByID(id)
     

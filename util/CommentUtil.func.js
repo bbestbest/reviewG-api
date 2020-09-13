@@ -21,7 +21,7 @@ module.exports = function(CommentModel) {
             const {comment_id} = await CommentModel.create(attributes)
 
             return _withReferences(references)
-               
+                .where({comment_id})
                 .fetch()
         },
         updateByID: async (comment_id,attributes,references) => {
