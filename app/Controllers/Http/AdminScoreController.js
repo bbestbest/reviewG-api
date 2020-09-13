@@ -5,12 +5,7 @@ const OverAllScore = require('../../../util/OverAllScoreUtil')
 const AdminScoreUtil = require('../../../util/AdminScoreUtil.func')
 const AdminScoreModel = use('App/Models/AdminScore')
 const Validator = use('Validator')
-function numberTypeParamValidator(number){
-    if (Number.isNaN(parseInt(number))) 
-    return{ error: `params: ${number} is not supported, please use number type param instead`}
-    
-    return{}
-}
+const numberTypeParamValidator = require('../../../util/numberTypeParamValidator.func')
 
 class AdminScoreController {
     async index ({request}) {
@@ -24,7 +19,6 @@ class AdminScoreController {
     async show ({request}) {
       const { id } = request.params
       const { references } = request.qs
-
       const validateValue = numberTypeParamValidator(id)
 
       if (validateValue.error) 

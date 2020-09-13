@@ -4,13 +4,7 @@ const PostValidator = require('../../../service/PostValidator')
 const PostUtil = require('../../../util/PostUtil.func')
 const PostModel = use('App/Models/Post')
 const Validator = use('Validator')
-
-function numberTypeParamValidator(number){
-    if (Number.isNaN(parseInt(number))) 
-    return{ error: `params: ${number} is not supported, please use number type param instead`}
-    
-    return{}
-}
+const numberTypeParamValidator = require('../../../util/numberTypeParamValidator.func')
 
 class PostController {
 
@@ -24,7 +18,6 @@ class PostController {
     async show ({request}) {
         const { id } = request.params
         const {references} = request.qs
-
         const validateValue = numberTypeParamValidator(id)
 
         if (validateValue.error) 

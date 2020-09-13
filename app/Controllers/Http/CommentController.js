@@ -4,13 +4,7 @@ const CommentValidator = require('../../../service/CommentValidator')
 const CommentUtil = require('../../../util/CommentUtil.func')
 const CommentModel = use('App/Models/Comment')
 const Validator = use('Validator')
-
-function numberTypeParamValidator(number){
-    if (Number.isNaN(parseInt(number))) 
-    return{ error: `params: ${number} is not supported, please use number type param instead`}
-    
-    return{}
-}
+const numberTypeParamValidator = require('../../../util/numberTypeParamValidator.func')
 
 class CommentController {
 
@@ -24,7 +18,6 @@ class CommentController {
     async show ({request}) {
         const { id } = request.params
         const {references} =request.qs
-
         const validateValue = numberTypeParamValidator(id)
 
         if (validateValue.error) 
