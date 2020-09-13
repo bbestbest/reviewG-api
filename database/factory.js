@@ -31,20 +31,26 @@ Factory.blueprint('App/Models/User', (faker) => {
 })
 
 Factory.blueprint('App/Models/AdminScore', (faker) => {
-    return {
-        story: faker.integer({ min: 0, max: 10 }),
-        gameplay: faker.integer({ min: 0, max: 10 }),
-        performance: faker.integer({ min: 0, max: 10 }),
-        graphic: faker.integer({ min: 0, max: 10 })
+  const story = faker.integer({ min:0,max:10 })
+  const gameplay = faker.integer({ min:0,max:10 })
+  const performance = faker.integer({ min:0,max:10 })
+  const graphic = faker.integer({ min:0,max:10 })
+
+    return { 
+        story, gameplay, performance, graphic,
+        overall:  ( story+gameplay+performance+graphic )/4
     }
 })
 
 Factory.blueprint('App/Models/UserScore', (faker) => {
+  const story = faker.integer({ min: 0, max: 10 })
+  const gameplay = faker.integer({ min: 0, max: 10 })
+  const performance = faker.integer({ min: 0, max: 10 })
+  const graphic = faker.integer({ min: 0, max: 10 })
     return {
-      story: faker.integer({ min: 0, max: 10 }),
-      gameplay: faker.integer({ min: 0, max: 10 }),
-      performance: faker.integer({ min: 0, max: 10 }),
-      graphic: faker.integer({ min: 0, max: 10 })
+      story ,gameplay,performance,graphic,
+      overall: (story+gameplay+performance+graphic)/4
+     
     }
 })
 
