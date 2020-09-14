@@ -1,21 +1,27 @@
 'use strict'
 
 const { test, trait } = use('Test/Suite')('Insert Test')
+
 const urlUsers = "/api/v1/users"
 const UserModel = use('App/Models/User')
 // const userUtilTest = require('../../util/test/userUtilTest')
+
 const urlAdmins = "/api/v1/admins"
 const AdminModel = use('App/Models/Admin')
 // const adminUtilTest = require('../../util/test/adminUtilTest')
+
 const urlComment = "/api/v1/comments"
 const CommentModel = use('App/Models/Comment')
 // const commentUtilTest = require('../../util/test/commentUtilTest')
+
 const urlUserScores = "/api/v1/user_scores"
 const UserScoreModel = use('App/Models/UserScore')
 // const userScoreUtilTest = require('../../util/test/userScoreUtilTest')
+
 const urlAdminScores = "/api/v1/admin_scores"
 const AdminScoreModel = use('App/Models/AdminScore')
 // const adminScoreUtilTest = require('../../util/test/adminScoreUtilTest')
+
 const urlPosts = "/api/v1/posts"
 const PostModel = use('App/Models/Post')
 // const postUtilTest = require('../../util/test/postUtilTest')
@@ -71,9 +77,9 @@ test('should insert value to admin score table', async ({ client }) => {
       graphic : "4"
     }
 
-    const resonse = await client.post(urlAdminScores).send(adminScore).end()
+    const response = await client.post(urlAdminScores).send(adminScore).end()
 
-    resonse.assertStatus(200)
+    response.assertStatus(200)
 })
 test('should insert value to comment table', async ({ client }) => {
   const comment = {
@@ -90,7 +96,7 @@ test('should insert value to post table', async ({ client }) => {
     writer : "New himself"
   }
 
-  const resonse = await client.post(urlPosts).send(post).end()
+  const response = await client.post(urlPosts).send(post).end()
 
-  resonse.assertStatus(200)
+  response.assertStatus(200)
 })
