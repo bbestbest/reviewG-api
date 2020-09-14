@@ -12,10 +12,10 @@ class PostsSchema extends Schema {
       table.string("writer")
       table.timestamp('post_date').default(this.fn.now())
       table.timestamps()
-      table.integer("admin_id").unsigned()
-      table.integer("user_score_id").unsigned()
-      table.integer("admin_score_id").unsigned()
-      table.integer("comment_id").unsigned()
+      table.integer("admin_id").unsigned().unique()
+      table.integer("user_score_id").unsigned().unique()
+      table.integer("admin_score_id").unsigned().unique()
+      table.integer("comment_id").unsigned().unique()
 
       table
         .foreign('admin_id')
