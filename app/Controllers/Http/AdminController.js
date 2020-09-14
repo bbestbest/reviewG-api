@@ -9,6 +9,7 @@ class AdminController {
 
     async index ({request}) {
         const { references } = request.qs
+
         const admin = await AdminUtil(AdminModel).getAll(references)
 
         return { status: 200,error: undefined, data:  admin}
@@ -29,16 +30,18 @@ class AdminController {
     }
 
     async store({request}) {
-        const { username, password , email } = request.body
-        const { references } = request.qs;
-        const validatedValue = await AdminValidator(request.body)
 
-        if(validatedValue.error) 
-            return { status: 422, error: validatedValue.error , data: undefined}
-        
-        const admin = await AdminUtil(AdminModel).create({username,password,email},references)
-        
-        return { status: 200,error: undefined, data: admin }
+      const { username, password , email } = request.body
+      const { references } = request.qs
+
+      const validatedData = await AdminValidator(request.body)
+
+      if (validatedData.error)
+        return { status: 422, error: validatedData.error, data: undefined }
+
+      const user = await AdminUtil(AdminModel).create({username,password,email},references)
+          
+      return { status: 200, error: undefined, data: user }
     }
 
     async update({request}){
