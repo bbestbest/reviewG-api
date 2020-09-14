@@ -1,10 +1,17 @@
+const OverallScoreUtil = require('../OverAllScoreUtil')
 module.exports = function (AdminScoreModel, admin_score_id) {
+  const story = 9
+  const gameplay = 6
+  const performance = 3
+  const graphic = 5
+  const overall = OverallScoreUtil(story,gameplay,performance,graphic)
     return AdminScoreModel.create({
       admin_score_id,
-      story:'9',
-      gameplay:'6',
-      performance:'3',
-      graphic:'5'
-    })
+      story,
+      gameplay,
+      performance,
+      graphic,
+      overall
+    }).then((response) => response["$attributes"])
 }
   
