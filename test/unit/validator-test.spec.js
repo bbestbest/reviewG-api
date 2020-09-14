@@ -1,15 +1,20 @@
 'use strict'
 
 const { test } = use('Test/Suite')('Validator Test')
+
 const UserValidator = require('../../service/UserValidator')
+
 const AdminValidator = require('../../service/AdminValidator')
+
 const UserScoreValidator = require('../../service/UserScoreValidator')
+
 const AdminScoreValidator = require('../../service/AdminScoreValidator')
+
 const CommentValidator = require('../../service/CommentValidator')
+
 const PostValidator = require('../../service/PostValidator')
 
-
-test('should return error with incorrect that required data from user validator', async ({ assert }) => {
+test('should return error with incorrect data that required from user validator', async ({ assert }) => {
   const data = {
     username:"test01",
     password:"1234",
