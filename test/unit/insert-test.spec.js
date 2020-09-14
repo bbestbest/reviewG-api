@@ -1,6 +1,6 @@
 'use strict'
 
-const { test, trait } = use('Test/Suite')('Insert_Test')
+const { test, trait } = use('Test/Suite')('Insert Test')
 const urlUsers = "/api/v1/users"
 const UserModel = use('App/Models/User')
 // const userUtilTest = require('../../util/test/userUtilTest')
@@ -53,14 +53,6 @@ test('should insert value to admin table', async ({ client }) => {
     email: "test001@mail.com"}
   })
 })
-test('should insert value to comment table', async ({ client }) => {
-  const comment = {
-    comment :"comment_test_01"
-  }
-  const response = await client.post(urlComment).send(comment).end()
-
-  response.assertStatus(200)
-})
 test('should insert value to user score table', async ({ client }) => {
   const userScore = {
     story:"3",
@@ -82,6 +74,14 @@ test('should insert value to admin score table', async ({ client }) => {
     const resonse = await client.post(urlAdminScores).send(adminScore).end()
 
     resonse.assertStatus(200)
+})
+test('should insert value to comment table', async ({ client }) => {
+  const comment = {
+    comment :"comment_test_01"
+  }
+  const response = await client.post(urlComment).send(comment).end()
+
+  response.assertStatus(200)
 })
 test('should insert value to post table', async ({ client }) => {
   const post = {
