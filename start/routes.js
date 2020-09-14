@@ -28,6 +28,7 @@ Route.group(() => {
   Route.resource('/user_scores', 'UserScoreController')
   
   Route.resource('/admins', 'AdminController')
+  Route.post('/login', 'AdminController.login')
 
   Route.resource('/admin_scores', 'AdminScoreController')
 
