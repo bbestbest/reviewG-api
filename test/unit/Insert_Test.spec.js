@@ -1,6 +1,6 @@
 'use strict'
 
-const { test , trait } = use('Test/Suite')('Insert_Test')
+const { test, trait } = use('Test/Suite')('Insert_Test')
 const urlUsers = "/api/v1/users"
 const UserModel = use('App/Models/User')
 const userUtilTest = require('../../util/test/userUtilTest')
@@ -23,18 +23,20 @@ const postUtilTest = require('../../util/test/postUtilTest')
 trait("Test/ApiClient");
 
 test('should insert value to user table', async ({ client }) => {
-  // const user = {
-  //     username: "test001",
-  //     password: "123456789",
-  //     email: "test001@mail.com"
-  //   }
-  //   const response = await client.post(urlUsers).send(user).end()
-  //   await UserModel.find(response.body.data.user_id).then((response) =>
-  //   response.delete()
-  // )
-  const {user_id} = await userUtilTest(UserModel)
-  const response = await client.delete(`${urlUsers}/${user_id}`).end()
+  const user = {
+    username: "test001",
+    password: "123456789",
+    email: "test001@mail.com"
+  }
+
+  const response = await client.post(urlUsers).send(user).end()
+
+  response.assertJSONSubset({
+    username: "test001",
+    email: "test001@mail.com"
+  })
 })
+
 test('should insert value to admin table', async ({ client }) => {
   // const admin = {
   //     username: "testadmin001",
@@ -43,7 +45,7 @@ test('should insert value to admin table', async ({ client }) => {
   //   }
   //   let response = await client.post(urlAdmins).send(admin).end()
   //   response = await client.delete(`${urlAdmins}/1`).end()
-  const {admin_id} = await adminUtilTest(AdminModel)
+  const { admin_id } = await adminUtilTest(AdminModel)
   const response = await client.delete(`${urlAdmins}/${admin_id}`).end()
 })
 test('should insert value to comment table', async ({ client }) => {
@@ -52,7 +54,7 @@ test('should insert value to comment table', async ({ client }) => {
   //   }
   //   let response = await client.post(urlComment).send(comment).end()
   //   response = await client.delete(`${urlComment}/1`).end()
-  const {comment_id} = await commentUtilTest(CommentModel)
+  const { comment_id } = await commentUtilTest(CommentModel)
   const response = await client.delete(`${urlComment}/${comment_id}`).end()
 })
 test('should insert value to user score table', async ({ client }) => {
@@ -66,7 +68,7 @@ test('should insert value to user score table', async ({ client }) => {
   //   await UserScoreModel.find(response.body.data.user_score_id).then((response) =>
   //   response.delete()
   // )
-  const {user_score_id} = await userScoreUtilTest(UserScoreModel)
+  const { user_score_id } = await userScoreUtilTest(UserScoreModel)
   const response = await client.delete(`${urlUserScores}/${user_score_id}`).end()
 })
 test('should insert value to admin score table', async ({ client }) => {
@@ -80,10 +82,10 @@ test('should insert value to admin score table', async ({ client }) => {
   //   await AdminScoreModel.find(response.body.data.admin_score_id).then((response) =>
   //   response.delete()
   // )
-  const {admin_score_id} = await adminScoreUtilTest(AdminScoreModel)
+  const { admin_score_id } = await adminScoreUtilTest(AdminScoreModel)
   const response = await client.delete(`${urlAdminScores}/${admin_score_id}`).end()
 })
 test('should insert value to post table', async ({ client }) => {
-    const {post_id} = await postUtilTest(PostModel)
-    const response = await client.delete(`${urlPosts}/${post_id}`).end()
+  const { post_id } = await postUtilTest(PostModel)
+  const response = await client.delete(`${urlPosts}/${post_id}`).end()
 })
