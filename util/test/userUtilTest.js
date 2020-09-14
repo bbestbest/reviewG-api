@@ -4,6 +4,5 @@ module.exports = function (UserModel, user_id) {
       username:'newnew001',
       password:'123456789',
       email:'newcnx@mail.com'
-    })
+    }).then((response) => response["$attributes"])
 }
-  
