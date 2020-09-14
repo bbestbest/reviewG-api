@@ -41,7 +41,7 @@ test('should delete data after insert data to user table', async ({ assert,clien
 
   const userTest = await UserControllerUtil(UserModel).deleteByID(user.user_id)
 
-  assert.isOk(userTest , 'User can not deleted')
+  assert.isOk(userTest , 'User can not delete')
 
   // response.assertStatus(200)
 })
@@ -52,7 +52,7 @@ test('should delete data after insert data to admin table', async ({ assert,clie
 
   const adminTest = await AdminControllerUtil(AdminModel).deleteByID(admin.admin_id)
 
-  assert.isOk(adminTest , 'Admin can not deleted')
+  assert.isOk(adminTest , 'Admin can not delete')
 
   // response.assertStatus(200)
 })
@@ -65,7 +65,7 @@ test('should delete data after insert data to user score table', async ({ assert
 
   // assert.equal(userScoreTest, null , 'User score can not deleted')
 
-  assert.isOk(userScoreTest , 'User score can not deleted')
+  assert.isOk(userScoreTest , 'User score can not delete')
 
   // response.assertStatus(200)
 })
@@ -102,7 +102,7 @@ test('should delete data after insert data to post table', async ({ assert,clien
 
   console.log(postTest)
 
-  assert.isOk(postTest , 'Post can not deleted')
+  assert.isOk(postTest , 'Post can not delete')
 
   // response.assertStatus(200)
 })
