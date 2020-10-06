@@ -71,11 +71,11 @@ class AdminController {
         }
       }
     async login ({ request , auth }) {
-        const { email , password } = request.body
-        const token = await auth.attempt(email,password)
-        auth.check()
-        return {status: 200 , error: undefined, data: token}
-      }
+      const { email , password } = request.body
+      const token = await auth.attempt(email,password)
+      auth.check()
+      return {status: 200 , error: undefined, data: token}
+    }
 }
 
 module.exports = AdminController

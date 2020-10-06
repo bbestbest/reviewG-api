@@ -28,7 +28,7 @@ Route.group(() => {
   Route.resource('/user_scores', 'UserScoreController')
   
   Route.resource('/admins', 'AdminController')
-  Route.get('/login_admin', 'AdminController.login')
+  Route.get('/login', 'AdminController.login')
 
   Route.resource('/admin_scores', 'AdminScoreController')
 

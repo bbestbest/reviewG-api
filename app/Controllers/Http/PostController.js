@@ -29,7 +29,7 @@ class PostController {
     }
 
     async store({request}) {
-        const { topic,body,writer } = request.body
+        const { topic,body,writer,catagories } = request.body
         const {references} = request.qs
 
         const validatedData = await PostValidator(request.body)
@@ -47,9 +47,9 @@ class PostController {
   
         const{ params,qs } = request
         const { id } = params
-        const { topic,body,writer } = request.body
+        const { topic,body,writer,catagories } = request.body
         const {references} = qs
-        const post = await PostUtil(PostModel).updateByID(id,{topic,body,writer},references)
+        const post = await PostUtil(PostModel).updateByID(id,{topic,body,writer,catagories},references)
   
       return {status: 200 , error: undefined, data: post}
       }

@@ -16,6 +16,7 @@ class PostsSchema extends Schema {
       table.integer("user_score_id").unsigned().unique()
       table.integer("admin_score_id").unsigned().unique()
       table.integer("comment_id").unsigned().unique()
+      table.string("catagories",30)
 
       table
         .foreign('admin_id')

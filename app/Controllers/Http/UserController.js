@@ -6,6 +6,7 @@ const UserModel = use('App/Models/User')
 const numberTypeParamValidator = require('../../../util/numberTypeParamValidator.func')
 
 class UserController {
+  
     async index ({request}) {
       const { references } = request.qs
 

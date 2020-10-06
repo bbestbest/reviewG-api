@@ -3,7 +3,8 @@ module.exports = function (PostModel, post_id) {
       post_id,
       topic : "Naratip Simulater",
       body : "Simulation of New Naratip",
-      writer : "New himself"
+      writer : "New himself",
+      catagories : "Action"
     }).then((response) => response["$attributes"])
 }
   

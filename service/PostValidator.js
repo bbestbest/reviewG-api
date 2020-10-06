@@ -8,12 +8,13 @@ module.exports = async function PostValidator ( data ) {
   const rules = {
     topic:'required',
     body:'required',
-    writer:'required'
+    writer:'required',
+    catagories: 'required'
 
   }
 
   const validation = await Validator.validateAll({
-    topic,body,writer 
+    topic,body,writer,catagories 
   }, rules)
 
 
