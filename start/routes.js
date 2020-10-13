@@ -20,13 +20,13 @@ Route.get('/', () => {
   return { greeting: 'Hello world in JSON' }
 })
 
-Route.group(() => { 
+Route.group(() => {
 
   Route.resource('/users', 'UserController')
   Route.get('/login', 'UserController.login')
-  
+
   Route.resource('/user_scores', 'UserScoreController')
-  
+
   Route.resource('/admins', 'AdminController')
   Route.get('/login', 'AdminController.login')
 
@@ -35,6 +35,10 @@ Route.group(() => {
   Route.resource('/comments', 'CommentController')
 
   Route.resource('/posts', 'PostController')
+
+  Route.get("/assets/:fileName", "AssetController.show")
+
+  Route.post("/assets", "AssetController.upload")
 
 }) .prefix('api/v1')
 
