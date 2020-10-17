@@ -35,10 +35,10 @@ Route.group(() => {
   Route.resource('/comments', 'CommentController')
 
   Route.resource('/posts', 'PostController')
+  Route.get('/posts/:catagories', 'PostController.showByCatagories')
+  Route.get('/posts/:catagories/:id', 'PostController.show')
 
-  Route.get("/assets/:fileName", "AssetController.show")
-
-  Route.post("/assets", "AssetController.upload")
+  Route.resource('/assets', 'AssetController.upload')
 
 }) .prefix('api/v1')
 

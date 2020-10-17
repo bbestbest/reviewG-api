@@ -12,10 +12,16 @@ module.exports = function(PostModel){
         getAll: (references) => {
             return _withReferences(references).fetch()
         },
-        getByID: (post_id,references) => {
+        getByID: (catagories, post_id, references) => {
             return _withReferences(references)
-                .where({post_id})
+                .where({catagories, post_id})
                 .fetch()
+        },
+        getByCatagories: (catagories, references) => {
+          return _withReferences(references)
+            .where({catagories})
+            .fetch()
+            .then((response) => response.first())
         },
         create: async (attributes,reference) => {
             const {post_id} = await PostModel.create(attributes)
@@ -39,7 +45,7 @@ module.exports = function(PostModel){
             }
             else {
                 return post
-            } 
+            }
         }
     }
-} 
+}
