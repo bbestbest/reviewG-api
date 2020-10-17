@@ -39,7 +39,7 @@ class UserController {
       if (validatedData.error)
         return { status: 422, error: validatedData.error, data: undefined }
 
-      const user = await UserUtil(UserModel).create({ email, username, password, display_name },references)
+      const user = await UserUtil(UserModel).create({ email, username, password, display_name }, references)
 
       return { status: 200, error: undefined, data: user }
     }
@@ -51,7 +51,7 @@ class UserController {
       const { email, username, password } = body
       const { references } = qs
 
-      const user = await UserUtil(UserModel).updateByID(id,{ email, username, password },references)
+      const user = await UserUtil(UserModel).updateByID(id,{ email, username, password }, references)
 
       return {status: 200 , error: undefined, data: user}
     }
@@ -69,8 +69,9 @@ class UserController {
         return {status: 200 , error: undefined, data: { massage: ` ${id} not found` }}
       }
     }
+
     async login ({ request , auth }) {
-      const { email , password } = request.body
+      const { username, password } = request.body
       const token = await auth.attempt(username,password)
       auth.check()
       return {status: 200 , error: undefined, data: token}

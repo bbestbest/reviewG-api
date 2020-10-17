@@ -19,7 +19,7 @@ class AdminController {
         const { id } = request.params
         const { references } = request.qs
         const validateValue = numberTypeParamValidator(id)
-            
+
         if (validateValue.error) {
             return {status: 500, error: validateValue.error, data: undefined }
         }
@@ -31,7 +31,7 @@ class AdminController {
 
     async store({request}) {
 
-      const { username, password , email } = request.body
+      const { username, password, email, display_name } = request.body
       const { references } = request.qs
 
       const validatedData = await AdminValidator(request.body)
@@ -39,30 +39,30 @@ class AdminController {
       if (validatedData.error)
         return { status: 422, error: validatedData.error, data: undefined }
 
-      const user = await AdminUtil(AdminModel).create({username,password,email},references)
-          
+      const user = await AdminUtil(AdminModel).create({email, username, password, display_name}, references)
+
       return { status: 200, error: undefined, data: user }
     }
 
     async update({request}){
-  
+
         const { body,params,qs } = request
         const { id } = params
         const { username,password,email } = body
         const { references } = qs
-  
-        const admin = await AdminUtil(AdminModel).updateByID(id,{username,password,email},references)
-  
+
+        const admin = await AdminUtil(AdminModel).updateByID(id,{email, username, password, display_name}, references)
+
       return {status: 200 , error: undefined, data: admin}
       }
-  
+
     async destroy ({ request }) {
         const { params , qs } =request
         const { id } = params
         const { references} = qs
 
         const admin = await AdminUtil(AdminModel).deleteByID(id)
-        
+
         if(admin) {
             return {status: 200 , error: undefined, data: { massage: ' success' }}
         }
@@ -70,12 +70,13 @@ class AdminController {
             return {status: 200 , error: undefined, data: { massage: ` ${id} not found` }}
         }
       }
+
     async login ({ request , auth }) {
-      const { email , password } = request.body
-      const token = await auth.attempt(email,password)
-      auth.check()
-      return {status: 200 , error: undefined, data: token}
-    }
+        const { username, password } = request.body
+        const token = await auth.attempt(username,password)
+        auth.check()
+        return {status: 200 , error: undefined, data: token}
+      }
 }
 
 module.exports = AdminController
