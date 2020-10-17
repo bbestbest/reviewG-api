@@ -38,8 +38,8 @@ module.exports = function(PostModel){
                 .where({post_id})
                 .fetch()
         },
-        deleteByID: async (post_id) => {
-            const post = await PostModel.find(post_id)
+        deleteByID: async (catagories, post_id) => {
+            const post = await PostModel.find(catagories, post_id)
             if( post !== null) {
                 return post.delete()
             }

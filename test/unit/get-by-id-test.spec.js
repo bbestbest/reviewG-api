@@ -42,7 +42,7 @@ test('should return user data from database', async ({ assert,client }) => {
   const response = await client.delete(`${urlUsers}/${user_id}`).end()
 
   assert.isOk(userTest , 'Can not get User by ID')
-  
+
   response.assertStatus(200)
 })
 
@@ -54,7 +54,7 @@ test('should return admin data from database', async ({ assert,client }) => {
   const response = await client.delete(`${urlAdmins}/${admin_id}`).end()
 
   assert.isOk(adminTest , 'Can not get Admin by ID')
-  
+
   response.assertStatus(200)
 })
 
@@ -66,7 +66,7 @@ test('should return user score data from database', async ({ assert,client }) =>
   const response = await client.delete(`${urlUserScores}/${user_score_id}`).end()
 
   assert.isOk(userScoreTest , 'Can not get User Score by ID')
-  
+
   response.assertStatus(200)
 
 })
@@ -92,18 +92,16 @@ test('should return comment data from database', async ({ assert,client }) => {
   const response = await client.delete(`${urlComments}/${comment_id}`).end()
 
   assert.isOk(commentTest , 'Can not get Comment by ID')
-  
+
   response.assertStatus(200)
 })
 
-test('should return post data from database', async ({ assert,client }) => {
-  const {post_id} = await PostUtilTest(PostModel)
+test('should return post data from database', async ({ assert, client }) => {
+  const {catagories, post_id} = await PostUtilTest(PostModel)
+  const postTest = await PostControllerUtil(PostModel).getByID(catagories, post_id)
 
-  const postTest = await PostControllerUtil(PostModel).getByID(post_id)
-
-  const response = await client.delete(`${urlPosts}/${post_id}`).end()
-
+  const response = await client.delete(`${urlPosts}/${catagories}/${post_id}`).end()
   assert.isOk(postTest , 'Can not get Post by ID')
-  
+
   response.assertStatus(200)
 })

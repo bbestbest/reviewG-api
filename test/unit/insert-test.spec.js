@@ -32,14 +32,14 @@ test('should insert value to user table', async ({ client }) => {
   const {user_id} = await UserUtilTest(UserModel)
 
   // let response = await client.post(urlUsers).send({user_id}).end()
-  
+
   // response.assertJSONSubset({
     //   data : {username : "test001",
     //   email: "test001@mail.com"}
     // })
 
   const response = await client.delete(`${urlUsers}/${user_id}`).end()
-  
+
   response.assertStatus(200)
 })
 
@@ -80,9 +80,9 @@ test('should insert value to comment table', async ({ client }) => {
   response.assertStatus(200)
 })
 test('should insert value to post table', async ({ client }) => {
-  const {post_id} = await PostUtilTest(PostModel)
+  const {catagories, post_id} = await PostUtilTest(PostModel)
 
-  const response = await client.delete(`${urlPosts}/${post_id}`).end()
+  const response = await client.delete(`${urlPosts}/${catagories}/${post_id}`).end()
 
   response.assertStatus(200)
 })

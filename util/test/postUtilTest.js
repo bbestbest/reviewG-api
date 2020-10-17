@@ -1,4 +1,4 @@
-module.exports = function (PostModel, post_id) {
+module.exports = function (PostModel, post_id, catagories) {
     return PostModel.create({
       post_id,
       topic : "Naratip Simulater",
@@ -7,4 +7,3 @@ module.exports = function (PostModel, post_id) {
       catagories : "Action"
     }).then((response) => response["$attributes"])
 }
-  

@@ -64,7 +64,8 @@ test('should return error with incorrect data that required from post validator'
   const data = {
     topic : "Naratip Simulater",
     body : "Simulation of New Naratip",
-    writer : `${test}`
+    writer : `${test}`,
+    catagories: `5`
   }
   const post = await PostValidator(data)
   assert.isOk(post.error,'user score error')

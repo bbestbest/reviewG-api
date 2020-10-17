@@ -16,17 +16,19 @@ const Factory = use('Factory')
 
 Factory.blueprint('App/Models/Admin', (faker) => {
     return {
+      email: faker.email(),
       username: faker.username(),
       password: faker.password(),
-      email: faker.email()
+      display_name: faker.name()
   }
 })
 
 Factory.blueprint('App/Models/User', (faker) => {
     return {
+        email: faker.email(),
         username: faker.username(),
         password: faker.password(),
-        email: faker.email()
+        display_name: faker.name()
     }
 })
 
@@ -36,7 +38,7 @@ Factory.blueprint('App/Models/AdminScore', (faker) => {
   const performance = faker.integer({ min:0,max:10 })
   const graphic = faker.integer({ min:0,max:10 })
 
-    return { 
+    return {
         story, gameplay, performance, graphic,
         overall:  ( story+gameplay+performance+graphic )/4
     }
@@ -50,7 +52,7 @@ Factory.blueprint('App/Models/UserScore', (faker) => {
     return {
       story ,gameplay,performance,graphic,
       overall: (story+gameplay+performance+graphic)/4
-     
+
     }
 })
 
@@ -64,7 +66,7 @@ Factory.blueprint('App/Models/Post', (faker) => {
     return {
       topic: faker.sentence(),
       body: faker.paragraph(),
-      writer: faker.name()
+      writer: faker.name(),
+      catagories: "Action"
     }
 })
-  

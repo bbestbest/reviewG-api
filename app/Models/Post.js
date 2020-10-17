@@ -18,6 +18,9 @@ class Post extends Model {
     userScores() {
         return this.hasMany('App/Models/UserScore')
     }
+    assets() {
+        return this.hasMany('App/Models/Asset')
+    }
     admins() {
         return this.belongsTo('App/Models/Admin')
     }

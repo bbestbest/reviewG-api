@@ -19,10 +19,10 @@ class PostController {
         const { catagories, id } = request.params
         const { references } = request.qs
 
-        const validateValue = numberTypeParamValidator(id)
+        // const validateValue = numberTypeParamValidator(id)
 
-        if (validateValue.error)
-          return {status: 500, error: validateValue.error, data: undefined }
+        // if (validateValue.error)
+        //   return {status: 500, error: validateValue.error, data: undefined }
 
         const post = await PostUtil(PostModel).getByID(catagories, id, references)
 
@@ -60,13 +60,13 @@ class PostController {
         // if(validateValue.error)
         //   return { status: 500, error: validateValue.error, data: undefined }
 
-        const post = await PostUtil(PostModel).getByCatagories(catagories,references)
+        const post = await PostUtil(PostModel).getByCatagories(catagories, references)
 
         return { status: 200, data: post || {}}
     }
 
     async store({request}) {
-        const { topic,body,writer,catagories } = request.body
+        const { topic, body, writer, catagories } = request.body
         const {references} = request.qs
 
         const validatedData = await PostValidator(request.body)
@@ -82,27 +82,27 @@ class PostController {
 
     async update({request}) {
 
-        const{ params,qs } = request
-        const { id } = params
-        const { topic,body,writer,catagories } = request.body
-        const {references} = qs
-        const post = await PostUtil(PostModel).updateByID(id,{topic,body,writer,catagories},references)
+        const{ params, qs } = request
+        const { catagoriesType, id } = params
+        const { topic, body, writer, catagories } = request.body
+        const { references } = qs
+        const post = await PostUtil(PostModel).updateByID(id,{topic, body, writer, catagories},references)
 
       return {status: 200 , error: undefined, data: post}
       }
 
     async destroy ({ request }) {
-        const { params , qs } =request
-        const { id } = params
-        const {references} = qs
+        const { params , qs } = request
+        const { catagories, id } = params
+        const { references } = qs
 
-        const post = await PostUtil(PostModel).deleteByID(id)
+        const post = await PostUtil(PostModel).deleteByID(catagories,id)
 
         if(post) {
             return {status: 200 , error: undefined, data: { massage: ' success' }}
         }
         else {
-            return {status: 200 , error: undefined, data: { massage: ` ${id} not found` }}
+            return {status: 200 , error: undefined, data: { massage: ` ${catagories,id} not found` }}
         }
       }
 
