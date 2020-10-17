@@ -2,8 +2,10 @@
 
 const Helpers = use("Helpers")
 const Env = use("Env")
+const AssetModel = use('App/Models/Asset')
 
 class AssetController {
+
   show({ request, response }) {
     const { fileName } = request.params
     return response.download(Helpers.tmpPath(`upload/${fileName}`))
@@ -21,9 +23,14 @@ class AssetController {
     if (!file.moved())
       throw new Error('File move error')
 
+    const {asset_path} = {
+      asset_path: `http://${Env.get('HOST')}:${Env.get('PORT')}/api/v1/assets/${fileName}`
+    }
+    await AssetModel.create({asset_path})
+
     return {
       status: 200,
-      date: {path: `http://${Env.get('Host')}:${Env.get('PORT')}/api/v1/assets/${fileName}`}
+      date: {path: `http://${Env.get('HOST')}:${Env.get('PORT')}/api/v1/assets/${fileName}`}
     }
   }
 }
