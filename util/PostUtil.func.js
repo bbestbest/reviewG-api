@@ -1,9 +1,9 @@
 module.exports = function(PostModel){
-    const _withReferences = (reference) => {
+    const _withReferences = (references) => {
         const _Post = PostModel.query()
-            if(reference){
+            if(references){
                 const extractedReferences = references.split(",")
-                extractedReferences.forEach((references) => _Comment.with(references))
+                extractedReferences.forEach((references) => _Post.with(references))
             }
         return _Post
     }
@@ -12,24 +12,32 @@ module.exports = function(PostModel){
         getAll: (references) => {
             return _withReferences(references).fetch()
         },
-        getByID: (catagories, post_id, references) => {
+        getByID: (post_id, references) => {
             return _withReferences(references)
-                .where({catagories, post_id})
-                .fetch()
+              .where({ post_id })
+              .fetch()
         },
         getByCatagories: (catagories, references) => {
           return _withReferences(references)
             .where({catagories})
             .fetch()
-            .then((response) => response.first())
         },
-        create: async (attributes,reference) => {
+        create: async (attributes, references) => {
             const {post_id} = await PostModel.create(attributes)
-            return _withReferences(reference)
+            return _withReferences(references)
             .where({post_id})
             .fetch()
         },
-        updateByID: async(post_id,attributes,references) =>{
+        updateView: async(post_id, views, references) => {
+          let post = await PostModel.find(post_id)
+          views = views + 1
+          console.log(views)
+
+          return _withReferences(references)
+              .where({post_id})
+              .update({views})
+        },
+        updateByID: async(post_id, attributes, references) =>{
             let post = await PostModel.find(post_id)
             post.merge(attributes)
             await post.save()

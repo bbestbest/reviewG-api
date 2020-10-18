@@ -5,6 +5,7 @@ const PostUtil = require('../../../util/PostUtil.func')
 const PostModel = use('App/Models/Post')
 const Validator = use('Validator')
 const numberTypeParamValidator = require('../../../util/numberTypeParamValidator.func')
+const { post } = require('@adonisjs/framework/src/Route/Manager')
 
 class PostController {
 
@@ -16,15 +17,17 @@ class PostController {
     }
 
     async show ({request}) {
-        const { catagories, id } = request.params
+        const { post_id } = request.params
         const { references } = request.qs
+        const { views } = await PostModel.find(post_id)
 
-        // const validateValue = numberTypeParamValidator(id)
+        const validateValue = numberTypeParamValidator(post_id)
 
-        // if (validateValue.error)
-        //   return {status: 500, error: validateValue.error, data: undefined }
+        if (validateValue.error)
+          return {status: 500, error: validateValue.error, data: undefined }
 
-        const post = await PostUtil(PostModel).getByID(catagories, id, references)
+        const countViews = await PostUtil(PostModel).updateView(post_id, views, references)
+        const post = await PostUtil(PostModel).getByID(post_id, references)
 
         return { status:200,data: post || {}}
     }
@@ -82,11 +85,11 @@ class PostController {
 
     async update({request}) {
 
-        const{ params, qs } = request
-        const { catagoriesType, id } = params
+        const { params, qs } = request
+        const { id } = params
         const { topic, body, writer, catagories } = request.body
         const { references } = qs
-        const post = await PostUtil(PostModel).updateByID(id,{topic, body, writer, catagories},references)
+        const post = await PostUtil(PostModel).updateByID(id, {topic, body, writer, catagories}, references)
 
       return {status: 200 , error: undefined, data: post}
       }

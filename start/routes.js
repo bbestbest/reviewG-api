@@ -34,14 +34,15 @@ Route.group(() => {
 
   Route.resource('/comments', 'CommentController')
 
-  Route.get('/posts/', 'PostController.index')
+  Route.get('/posts', 'PostController.index')
   Route.get('/posts/:catagories', 'PostController.showByCatagories')
-  Route.get('/posts/:catagories/:id', 'PostController.show')
+  Route.get('/posts/:catagories/:post_id', 'PostController.show')
   Route.post('/posts/', 'PostController.store')
-  Route.patch('/posts/:catagoriesType/:id', 'PostController.update')
+  Route.patch('/posts/:id', 'PostController.update')
   Route.delete('/posts/:catagories/:id', 'PostController.destroy')
 
-  Route.get('/assets/:fileName', 'AssetController.show')
+  Route.get('/assets/:fileName','AssetController.show')
+  // Route.get('/assets/:asset_id', 'AssetController.getImage')
   Route.post('/assets', 'AssetController.upload')
 
 }) .prefix('api/v1')
