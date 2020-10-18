@@ -8,7 +8,7 @@ class Asset extends Model {
     return 'asset_id'
   }
   post() {
-    return this.belongsToMany('App/Models/Post')
+    return this.belongsTo('App/Models/Post')
   }
 }
 

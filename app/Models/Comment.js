@@ -16,7 +16,7 @@ class Comment extends Model {
         return this.belongsTo('App/Models/User')
     }
     post() {
-        return this.hasOne('App/Models/Post')
+        return this.belongsTo('App/Models/Post')
     }
 }
 
