@@ -10,13 +10,11 @@ class PostsSchema extends Schema {
       table.string("topic",150)
       table.string("body",10000)
       table.string("writer",30)
+      table.integer("views",255).default(0)
       table.timestamp('post_date').default(this.fn.now())
       table.timestamps()
       table.integer("admin_id").unsigned().unique()
-      table.integer("user_score_id").unsigned().unique()
       table.integer("admin_score_id").unsigned().unique()
-      table.integer("comment_id").unsigned().unique()
-      table.integer("asset_id").unsigned().unique()
       table.string("catagories",30)
 
       table
@@ -26,26 +24,8 @@ class PostsSchema extends Schema {
         .onUpdate('CASCADE')
 
       table
-        .foreign('user_score_id')
-        .references('user_scores.user_score_id')
-        .onDelete('CASCADE')
-        .onUpdate('CASCADE')
-
-      table
         .foreign('admin_score_id')
         .references('admin_scores.admin_score_id')
-        .onDelete('CASCADE')
-        .onUpdate('CASCADE')
-
-      table
-        .foreign('comment_id')
-        .references('comments.comment_id')
-        .onDelete('CASCADE')
-        .onUpdate('CASCADE')
-
-      table
-        .foreign('asset_id')
-        .references('assets.asset_id')
         .onDelete('CASCADE')
         .onUpdate('CASCADE')
 
