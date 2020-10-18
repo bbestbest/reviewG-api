@@ -46,9 +46,9 @@ test('should patch a new user data to inserted data', async ({ assert,client }) 
   const userTest = await UserControllerUtil(UserModel).updateByID(user_id,userTarget)
 
   const response = await client.delete(`${urlUsers}/${user_id}`).end()
-  
+
   assert.isOk(userTest , 'User can not patch')
-  
+
 })
 
 test('should patch a new admin data to inserted data', async ({ assert,client }) => {
@@ -63,9 +63,9 @@ test('should patch a new admin data to inserted data', async ({ assert,client })
   const adminTest = await AdminControllerUtil(AdminModel).updateByID(admin_id,adminTarget)
 
   const response = await client.delete(`${urlAdmins}/${admin_id}`).end()
-  
+
   assert.isOk(adminTest , 'Admin can not patch')
-  
+
 })
 
 test('should patch a new user score data to inserted data', async ({ assert,client }) => {
@@ -81,9 +81,9 @@ test('should patch a new user score data to inserted data', async ({ assert,clie
   const userScoreTest = await UserScoreControllerUtil(UserScoreModel).updateByID(user_score_id,userScoreTarget)
 
   const response = await client.delete(`${urlUserScores}/${user_score_id}`).end()
-  
+
   assert.isOk(userScoreTest , 'User score can not patch')
-  
+
 })
 
 test('should patch a new admin score data to inserted data', async ({ assert,client }) => {
@@ -99,9 +99,9 @@ test('should patch a new admin score data to inserted data', async ({ assert,cli
   const adminScoreTest = await AdminScoreControllerUtil(AdminScoreModel).updateByID(admin_score_id,adminScoreTarget)
 
   const response = await client.delete(`${urlAdminScores}/${admin_score_id}`).end()
-  
+
   assert.isOk(adminScoreTest , 'User score can not patch')
-  
+
 })
 
 test('should patch a new comment data to inserted data', async ({ assert,client }) => {
@@ -114,24 +114,25 @@ test('should patch a new comment data to inserted data', async ({ assert,client 
   const commentTest = await CommentControllerUtil(CommentModel).updateByID(comment_id,commentTarget)
 
   const response = await client.delete(`${urlComments}/${comment_id}`).end()
-  
-  assert.isOk(commentTest , 'Admin can not patch')
-  
+
+  assert.isOk(commentTest , 'Comment can not patch')
+
 })
 
-test('should patch a new comment data to inserted data', async ({ assert,client }) => {
-  const {post_id} = await PostUtilTest(PostModel)
+test('should patch a new post data to inserted data', async ({ assert,client }) => {
+  const {post_id, catagories} = await PostUtilTest(PostModel)
 
   const postTarget = {
     topic : "The New Naratip Simulater",
     body : "Simulation of New Naratip V2",
-    writer : "New himself V2"
+    writer : "New himself V2",
+    catagories: "Adventure"
   }
 
   const postTest = await PostControllerUtil(PostModel).updateByID(post_id,postTarget)
 
-  const response = await client.delete(`${urlPosts}/${post_id}`).end()
-  
-  assert.isOk(postTest , 'Admin can not patch')
-  
+  const response = await client.delete(`${urlPosts}/Adventure/${post_id}`).end()
+
+  assert.isOk(postTest , 'Post can not patch')
+
 })

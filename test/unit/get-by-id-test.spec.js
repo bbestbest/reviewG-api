@@ -97,10 +97,10 @@ test('should return comment data from database', async ({ assert,client }) => {
 })
 
 test('should return post data from database', async ({ assert, client }) => {
-  const {catagories, post_id} = await PostUtilTest(PostModel)
-  const postTest = await PostControllerUtil(PostModel).getByID(catagories, post_id)
+  const { post_id } = await PostUtilTest(PostModel)
+  const postTest = await PostControllerUtil(PostModel).getByID(post_id)
 
-  const response = await client.delete(`${urlPosts}/${catagories}/${post_id}`).end()
+  const response = await client.delete(`${urlPosts}/Action/${post_id}`).end()
   assert.isOk(postTest , 'Can not get Post by ID')
 
   response.assertStatus(200)
