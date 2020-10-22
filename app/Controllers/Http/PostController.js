@@ -6,7 +6,6 @@ const PostModel = use('App/Models/Post')
 const Validator = use('Validator')
 const numberTypeParamValidator = require('../../../util/numberTypeParamValidator.func')
 const { post } = require('@adonisjs/framework/src/Route/Manager')
-
 class PostController {
 
     async index ({request}) {
@@ -26,7 +25,7 @@ class PostController {
         if (validateValue.error)
           return {status: 500, error: validateValue.error, data: undefined }
 
-        const countViews = await PostUtil(PostModel).updateView(post_id, views, references)
+        // const countViews = await PostUtil(PostModel).updateView(post_id, views, references)
         const post = await PostUtil(PostModel).getByID(post_id, references)
 
         return { status:200,data: post || {}}
