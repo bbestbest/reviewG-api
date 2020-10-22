@@ -67,6 +67,6 @@ Factory.blueprint('App/Models/Post', (faker) => {
       topic: faker.sentence(),
       body: faker.paragraph(),
       writer: faker.name(),
-      catagories: "Action"
+      catagories: "action"
     }
 })
