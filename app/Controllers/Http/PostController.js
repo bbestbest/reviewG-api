@@ -16,16 +16,14 @@ class PostController {
     }
 
     async show ({request}) {
-        const { post_id } = request.params
+        const { catagories, post_id } = request.params
         const { references } = request.qs
-        const { views } = await PostModel.find(post_id)
 
         const validateValue = numberTypeParamValidator(post_id)
 
         if (validateValue.error)
           return {status: 500, error: validateValue.error, data: undefined }
 
-        // const countViews = await PostUtil(PostModel).updateView(post_id, views, references)
         const post = await PostUtil(PostModel).getByID(post_id, references)
 
         return { status:200,data: post || {}}
@@ -34,33 +32,6 @@ class PostController {
     async showByCatagories({ request }) {
         const { catagories } = request.params
         const { references } = request.qs
-
-        // switch(catagoriesId) {
-        //   case '1':
-        //     catagories = 'Action'
-        //     break;
-        //   case '2':
-        //     catagories = 'Adventure'
-        //     break;
-        //   case '3':
-        //     catagories = 'RPG'
-        //     break;
-        //   case '4':
-        //     catagories = 'Simulation'
-        //     break;
-        //   case '5':
-        //     catagories = 'Strategy'
-        //     break;
-        //   case '6':
-        //     catagories = 'Sport'
-        //     break;
-        //   return catagories
-        // }
-
-        // const validateValue = numberTypeParamValidator(catagories)
-
-        // if(validateValue.error)
-        //   return { status: 500, error: validateValue.error, data: undefined }
 
         const post = await PostUtil(PostModel).getByCatagories(catagories, references)
 
@@ -83,15 +54,25 @@ class PostController {
     }
 
     async update({request}) {
+      const { params, qs } = request
+      const { id } = params
+      const { topic, body, writer, catagories } = request.body
+      const { references } = qs
 
-        const { params, qs } = request
-        const { id } = params
-        const { topic, body, writer, catagories } = request.body
-        const { references } = qs
-        const post = await PostUtil(PostModel).updateByID(id, {topic, body, writer, catagories}, references)
+      const post = await PostUtil(PostModel).updateByID(id, {topic, body, writer, catagories}, references)
 
       return {status: 200 , error: undefined, data: post}
-      }
+    }
+
+    async updateViews({request}) {
+      const { catagories, post_id } = request.params
+
+      const { views } = await PostModel.find(post_id)
+
+      const countViews = await PostUtil(PostModel).updateView(post_id, views)
+
+      return {status: 200 , error: undefined, data: countViews}
+    }
 
     async destroy ({ request }) {
         const { params , qs } = request

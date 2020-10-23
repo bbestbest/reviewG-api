@@ -29,9 +29,7 @@ module.exports = function(PostModel){
             .fetch()
         },
         updateView: async(post_id, views, references) => {
-          let post = await PostModel.find(post_id)
           views = views + 1
-          console.log(views)
 
           return _withReferences(references)
               .where({post_id})

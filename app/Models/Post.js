@@ -25,7 +25,7 @@ class Post extends Model {
         return this.belongsTo('App/Models/Admin')
     }
     adminScore() {
-        return this.belongsToMany('App/Models/AdminScore')
+        return this.belongsTo('App/Models/AdminScore')
     }
 }
 

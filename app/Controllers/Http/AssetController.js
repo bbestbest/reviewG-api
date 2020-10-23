@@ -20,7 +20,7 @@ class AssetController {
   async upload({ request }) {
     const file = request.file("image", {
       types: ["image"],
-      size: "2mb"
+      size: "10mb"
     })
     const fileName = `${new Date().getTime()}.jpg`
     await file.move(Helpers.tmpPath("upload"), {

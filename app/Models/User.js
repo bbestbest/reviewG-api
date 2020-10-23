@@ -6,7 +6,7 @@ const Hash = use('Hash')
 class User extends Model {
     static boot () {
         super.boot()
-    
+
         this.addHook('beforeCreate', async (userInstance) => {
             if (userInstance.dirty.password) {
                 userInstance.password = await Hash.make(userInstance.dirty.password)
@@ -25,7 +25,7 @@ class User extends Model {
     userScores() {
         return this.hasMany('App/Models/UserScore')
     }
-    comment() {
+    comments() {
         return this.hasMany('App/Models/Comment')
     }
 }
