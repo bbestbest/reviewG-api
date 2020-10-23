@@ -39,6 +39,7 @@ Route.group(() => {
   Route.get('/posts/:catagories/:post_id', 'PostController.show')
   Route.post('/posts/', 'PostController.store')
   Route.patch('/posts/:id', 'PostController.update')
+  Route.patch('/posts/:catagories/:post_id', 'PostController.updateViews')
   Route.delete('/posts/:catagories/:id', 'PostController.destroy')
 
   Route.get('/assets/:fileName','AssetController.show')
