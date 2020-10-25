@@ -4,7 +4,6 @@ const UserValidator = require("../../../service/UserValidator")
 const UserUtil = require("../../../util/UserUtil.func")
 const UserModel = use('App/Models/User')
 const numberTypeParamValidator = require('../../../util/numberTypeParamValidator.func')
-const hash = use('Hash')
 class UserController {
 
     async index ({request}) {
