@@ -41,7 +41,7 @@ class PostController {
     async store({request}) {
         const { topic, body, writer, catagories } = request.body
         const {references} = request.qs
-
+        console.log(request.body)
         const validatedData = await PostValidator(request.body)
 
 
