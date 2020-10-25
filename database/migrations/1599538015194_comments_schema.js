@@ -9,6 +9,7 @@ class CommentsSchema extends Schema {
       table.increments('comment_id')
       table.string("comment",255)
       table.timestamp('comment_date').default(this.fn.now())
+      table.string("date")
       table.integer("user_id").unsigned()
       table.integer("post_id").unsigned()
       table.timestamps()
