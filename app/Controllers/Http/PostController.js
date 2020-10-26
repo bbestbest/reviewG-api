@@ -41,14 +41,12 @@ class PostController {
     async store({request}) {
         const { topic, body, writer, catagories } = request.body
         const {references} = request.qs
-        console.log(request.body)
         const validatedData = await PostValidator(request.body)
-
 
         if (validatedData.error)
           return { status: 422, error: validatedData.error, data: undefined }
 
-        const post = await PostUtil(PostModel).create({topic,body,writer},references)
+        const post = await PostUtil(PostModel).create({topic,body,writer,catagories},references)
 
         return { status: 200, error: undefined, data:  post  }
     }
