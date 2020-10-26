@@ -28,7 +28,7 @@ Route.group(() => {
   Route.resource('/user_scores', 'UserScoreController')
 
   Route.resource('/admins', 'AdminController')
-  Route.post('/login', 'AdminController.login')
+  Route.post('/login_admin', 'AdminController.login')
 
   Route.resource('/admin_scores', 'AdminScoreController')
 
@@ -43,7 +43,6 @@ Route.group(() => {
   Route.delete('/posts/:catagories/:id', 'PostController.destroy')
 
   Route.get('/assets/:fileName','AssetController.show')
-  // Route.get('/assets/:asset_id', 'AssetController.getImage')
   Route.post('/assets', 'AssetController.upload')
 
 }) .prefix('api/v1')
