@@ -18,6 +18,12 @@ module.exports = function(AdminModel) {
                 .fetch()
                 .then((response) => response.first())
         },
+        getByUsernamePassword: (username,password,references) => {
+            return _withReferences(references)
+                .where({username,password})
+                .fetch()
+                .then((response) => response.first())
+        },
         create: async (attributes , references) => {
             const {admin_id} = await AdminModel.create(attributes)
             return _withReferences(references)
