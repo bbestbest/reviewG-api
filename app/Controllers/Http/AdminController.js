@@ -71,15 +71,10 @@ class AdminController {
         }
       }
 
-      async login({request, response}) {
+      async login({request}) {
         const { username, password } = request.body
-        try {
-              let user = await AdminUtil(AdminModel).getByUsernamePassword(username,password)
-              return response.json({status:200, error:undefined, "user":user })
-            }
-          catch (err) {
-            return response.json({message: 'Failed'})
-          }
+        const user = await AdminUtil(AdminModel).getByUsernamePassword(username,password)
+        return {status:200, error:undefined, data: user }
         }
       }
 
