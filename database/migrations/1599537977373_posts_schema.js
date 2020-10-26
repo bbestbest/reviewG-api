@@ -12,10 +12,11 @@ class PostsSchema extends Schema {
       table.string("writer",30)
       table.integer("views",255).default(0)
       table.string("catagories",30)
+      table.string('date')
       table.timestamp('post_date').default(this.fn.now())
       table.timestamps()
       table.integer("admin_id").unsigned()
-      table.integer("admin_score_id").unsigned().unique()
+      table.integer("admin_score_id").unsigned()
 
       table
         .foreign('admin_id')
