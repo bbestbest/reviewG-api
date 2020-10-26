@@ -5,15 +5,15 @@ const Model = use('Model')
 const Hash = use('Hash')
 
 class Admin extends Model {
-    static boot () {
-        super.boot()
+    // static boot () {
+    //     super.boot()
 
-        this.addHook('beforeCreate', async (adminInstance) => {
-            if (adminInstance.dirty.password) {
-                adminInstance.password = await Hash.make(adminInstance.dirty.password)
-              }
-        })
-    }
+    //     this.addHook('beforeCreate', async (adminInstance) => {
+    //         if (adminInstance.dirty.password) {
+    //             adminInstance.password = await Hash.make(adminInstance.dirty.password)
+    //           }
+    //     })
+    // }
 
     static get primaryKey() {
         return 'admin_id'
