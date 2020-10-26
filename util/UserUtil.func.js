@@ -18,6 +18,12 @@ module.exports = function(UserModel) {
                 .fetch()
                 .then((response) => response.first())
         },
+        getByUsername: (username,references) => {
+            return _withReferences(references)
+                .where({username})
+                .fetch()
+                .then((response) => response.first())
+        },
         create: async (attributes , references) => {
             const {user_id} = await UserModel.create(attributes)
 
@@ -44,6 +50,6 @@ module.exports = function(UserModel) {
             else {
                 return user
             }
-        }
+        },
     }
 }

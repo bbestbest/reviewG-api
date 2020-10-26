@@ -58,7 +58,8 @@ Factory.blueprint('App/Models/UserScore', (faker) => {
 
 Factory.blueprint('App/Models/Comment', (faker) => {
     return {
-      comment: faker.sentence()
+      comment: faker.sentence(),
+      date: new Date().toLocaleString()
     }
 })
 
@@ -67,6 +68,7 @@ Factory.blueprint('App/Models/Post', (faker) => {
       topic: faker.sentence(),
       body: faker.paragraph(),
       writer: faker.name(),
-      catagories: "action"
+      catagories: "action",
+      date: new Date().toLocaleString()
     }
 })

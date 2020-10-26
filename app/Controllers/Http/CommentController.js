@@ -19,7 +19,7 @@ class CommentController {
         const {references} =request.qs
         const validateValue = numberTypeParamValidator(id)
 
-        if (validateValue.error) 
+        if (validateValue.error)
             return {status: 500, error: validateValue.error, data: undefined }
 
         const comment = await CommentUtil(CommentModel).getByID(id,references)
@@ -28,28 +28,28 @@ class CommentController {
     }
 
     async store({request}) {
-        const { comment } = request.body
+        const { comment, user_id, post_id, date} = request.body
         const {references} = request.qs
 
         const validatedData = await CommentValidator(request.body)
-        
+
         if (validatedData.error)
           return { status: 422, error: validatedData.error, data: undefined }
 
-        const comments = await CommentUtil(CommentModel).create({comment},references)
-    
+        const comments = await CommentUtil(CommentModel).create({comment, user_id, post_id, date},references)
+
         return { status: 200, error: undefined, data:  comments }
     }
 
     async update({request}) {
-  
+
         const{ body,params } = request
         const { id } = params
         const { comment  } = body
         const {references} = request.qs
-  
+
         await CommentUtil(CommentModel).updateByID(id,{comment},references)
-  
+
       return {status: 200 , error: undefined, data: comment}
       }
 

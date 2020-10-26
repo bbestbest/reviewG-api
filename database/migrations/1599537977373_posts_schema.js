@@ -14,7 +14,7 @@ class PostsSchema extends Schema {
       table.string("catagories",30)
       table.timestamp('post_date').default(this.fn.now())
       table.timestamps()
-      table.integer("admin_id").unsigned().unique()
+      table.integer("admin_id").unsigned()
       table.integer("admin_score_id").unsigned().unique()
 
       table

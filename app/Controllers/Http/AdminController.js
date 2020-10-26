@@ -71,12 +71,19 @@ class AdminController {
         }
       }
 
-    async login ({ request , auth }) {
+      async login({request, auth, response}) {
         const { username, password } = request.body
-        const token = await auth.attempt(username,password)
-        auth.check()
-        return {status: 200 , error: undefined, data: token}
-      }
+          try {
+            if (await auth.attempt(username, password)) {
+              let user = await UserUtil(UserModel).getByUsername(username)
+              let accessToken = await auth.generate(user)
+              return response.json({status:200, error:undefined, "user":user, "access_token": accessToken})
+            }
+          }
+          catch (err) {
+            return response.json({message: 'Failed'})
+          }
+        }}
 }
 
 module.exports = AdminController
