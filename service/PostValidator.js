@@ -9,7 +9,7 @@ module.exports = async function PostValidator ( data ) {
     topic:'required',
     body:'required',
     writer:'required',
-    catagories: 'required|unique:posts'
+    catagories: 'required'
 
   }
 
