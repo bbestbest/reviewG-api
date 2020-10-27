@@ -42,10 +42,10 @@ class PostController {
         const { topic, body, writer, catagories, admin_id, admin_score_id } = request.body
         const date = new Date().toISOString()
         const {references} = request.qs
-        const validatedData = await PostValidator(request.body)
+        // const validatedData = await PostValidator(request.body)
 
-        if (validatedData.error)
-          return { status: 422, error: validatedData.error, data: undefined }
+        // if (validatedData.error)
+        //   return { status: 422, error: validatedData.error, data: undefined }
 
         const post = await PostUtil(PostModel).create({topic,body,writer,catagories,admin_id,admin_score_id,date},references)
 
